@@ -10,3 +10,19 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Patient {
+  id Int
+  name String
+  surname String
+  birth Date
+  cpf String
+  email String
+  phone String
+  address String
+  allergy String
+  medical_record
+
+  CreatedAt DateTime
+  updateAt DateTime
+}
