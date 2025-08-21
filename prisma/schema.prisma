@@ -35,7 +35,7 @@ model MedicationMovement {
 }
 
 model Patient {
-  id Int
+  id Int @id @default( autoincrement() )
   name String
   surname String
   birth Date
@@ -44,10 +44,10 @@ model Patient {
   phone String
   address String
   allergy String
-  medical_record
+  medicalRecord String @map("medical_record")
 
-  CreatedAt DateTime
-  updateAt DateTime
+  CreatedAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updateAt
 }
 model user {
 
