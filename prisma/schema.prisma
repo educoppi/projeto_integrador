@@ -34,3 +34,55 @@ model MedicationMovement {
   userId Int
 }
 
+model Patient {
+  id Int
+  name String
+  surname String
+  birth Date
+  cpf String
+  email String
+  phone String
+  address String
+  allergy String
+  medical_record
+
+  CreatedAt DateTime
+  updateAt DateTime
+}
+model user {
+
+  id int 
+
+  name String
+  password String
+  email String
+  role String
+
+
+  createdAt DateTime  
+  UpdatedAt DateTime
+}
+
+model Historic {
+  id int
+
+  appointmentDate DateTime
+  ExamId int
+  medicationId int
+  receitaId int
+
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+model Exam {
+  id int
+
+  date Date
+  type String
+  result String
+  observation String
+
+  createdAt DateTime
+  updatedAt DateTime
+}
