@@ -51,7 +51,7 @@ model Patient {
 }
 model user {
 
-  id int 
+  id Int @id @default(autoincrement()) 
 
   name String
   password String
@@ -59,8 +59,8 @@ model user {
   role String
 
 
-  createdAt DateTime  
-  UpdatedAt DateTime
+  createdAt DateTime  @map("created_At) @default(now())
+  UpdatedAt DateTime @map("update_At) @default(now())
 }
 
 model PatientHistory {
