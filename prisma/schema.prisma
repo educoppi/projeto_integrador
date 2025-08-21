@@ -26,3 +26,40 @@ model Patient {
   CreatedAt DateTime
   updateAt DateTime
 }
+model user {
+
+  id int 
+
+  name String
+  password String
+  email String
+  role String
+
+
+  createdAt DateTime  
+  UpdatedAt DateTime
+}
+
+model Historic {
+  id int
+
+  appointmentDate DateTime
+  ExamId int
+  medicationId int
+  receitaId int
+
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+model Exam {
+  id int
+
+  date Date
+  type String
+  result String
+  observation String
+
+  createdAt DateTime
+  updatedAt DateTime
+}
