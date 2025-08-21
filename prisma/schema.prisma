@@ -12,26 +12,26 @@ datasource db {
 }
 
 model Medication {
-  id Int
-  createdAt DateTime
-  updatedAt DateTime
+  id Int @id @default( autoincrement() )
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updateAt
 
   name String
   quantity String
   type String
-  expiresAt DateTime
+  expiresAt DateTime  @map("expires_at")
 
 }
 
 model MedicationMovement {
-  id Int
-  createdAt DateTime
-  updatedAt DateTime
+  id Int @id @default( autoincrement() )
+  createdAt DateTime  @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updateAt
 
-  medicationId Int
+  medicationId Int @map("medication_id")
   date Date
   quantity String 
-  userId Int
+  userId Int @map("user_id")
 }
 
 model Patient {
