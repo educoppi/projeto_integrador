@@ -64,25 +64,25 @@ model user {
 }
 
 model PatientHistory {
-  id int
+  id Int @id @default(autoincrement())
 
-  appointmentDate DateTime
-  ExamId int
-  medicationId int
-  receitaId int
+  appointmentDate DateTime @map("appointment_date")
+  examId int @map("exam_id")
+  medicationId int @map("medication_id")
+  prescriptionId int @map("prescription_id")
 
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updatedAt
 }
 
 model Exam {
-  id int
+  id Int @id @default(autoincrement())
 
   date Date
   type String
   result String
   observation String
 
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updatedAt
 }
