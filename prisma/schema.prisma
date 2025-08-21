@@ -63,7 +63,7 @@ model user {
   UpdatedAt DateTime
 }
 
-model Historic {
+model PatientHistory {
   id int
 
   appointmentDate DateTime
