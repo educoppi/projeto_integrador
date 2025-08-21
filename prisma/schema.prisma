@@ -12,30 +12,30 @@ datasource db {
 }
 
 model Medication {
-  id Int
-  createdAt DateTime
-  updatedAt DateTime
+  id Int @id @default( autoincrement() )
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updateAt
 
   name String
   quantity String
   type String
-  expiresAt DateTime
+  expiresAt DateTime  @map("expires_at")
 
 }
 
 model MedicationMovement {
-  id Int
-  createdAt DateTime
-  updatedAt DateTime
+  id Int @id @default( autoincrement() )
+  createdAt DateTime  @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updateAt
 
-  medicationId Int
+  medicationId Int @map("medication_id")
   date Date
   quantity String 
-  userId Int
+  userId Int @map("user_id")
 }
 
 model Patient {
-  id Int
+  id Int @id @default( autoincrement() )
   name String
   surname String
   birth Date
@@ -44,10 +44,10 @@ model Patient {
   phone String
   address String
   allergy String
-  medical_record
+  medicalRecord String @map("medical_record")
 
-  CreatedAt DateTime
-  updateAt DateTime
+  CreatedAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updateAt
 }
 model user {
 
@@ -64,25 +64,25 @@ model user {
 }
 
 model PatientHistory {
-  id int
+  id Int @id @default(autoincrement())
 
-  appointmentDate DateTime
-  ExamId int
-  medicationId int
-  receitaId int
+  appointmentDate DateTime @map("appointment_date")
+  examId int @map("exam_id")
+  medicationId int @map("medication_id")
+  prescriptionId int @map("prescription_id")
 
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updatedAt
 }
 
 model Exam {
-  id int
+  id Int @id @default(autoincrement())
 
   date Date
   type String
   result String
   observation String
 
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @map("created_at") @default( now() )
+  updatedAt DateTime @map("updated_at") @updatedAt
 }
