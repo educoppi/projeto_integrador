@@ -49,6 +49,7 @@ enum Role {
   PHARMACY
 }
 
+
 model Patient {
   id Int @id @default( autoincrement() )
   name String
@@ -113,6 +114,7 @@ model Prescription {
   medication Medication @relation(fields: [medicationId], references: [id])
 }
 
+//Rafael
 model Medication {
   id Int @id @default( autoincrement() )
   createdAt DateTime @map("created_at") @default( now() )
@@ -130,6 +132,7 @@ model Medication {
 
 }
 
+//Rafael
 model Movement {
   id Int @id @default( autoincrement() )
   createdAt DateTime  @map("created_at") @default( now() )
