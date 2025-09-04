@@ -4,3 +4,6 @@ node_modules
 package-lock.json
 
 /generated/prisma
+
+/prisma/dev.db
+/prisma/migrations/*

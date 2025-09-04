@@ -10,9 +10,9 @@ export const MovementController = {
             const m = await prisma.movement.create(
                 {
                     data: {
-                        medicationId,
-                        userId,
-                        quantity,
+                        medicationId:Number(medicationId),
+                        userId:Number(userId),
+                        quantity:Number(quantity),
                         date,
                         movementType
                     }

@@ -1,0 +1,9 @@
+POST http://localhost:3000/medications HTTP/1.1
+content-type: application/json 
+
+{
+     "name": "Paracetamol",
+     "quantity": 500,
+     "type": "comprimidos",
+     "expiresAt": "2025-09-04T19:51:38.868Z"
+}

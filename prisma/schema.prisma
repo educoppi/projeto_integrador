@@ -123,7 +123,7 @@ model Medication {
   updatedAt DateTime @map("updated_at") @updatedAt
 
   name String
-  quantity String
+  quantity Int
   type String
   expiresAt DateTime  @map("expires_at")
 
@@ -143,7 +143,7 @@ model Movement {
   medicationId Int @map("medication_id")
   userId Int @map("user_id")
   date DateTime
-  quantity String 
+  quantity Int 
   movementType MovementType @map("movement_type")
 
   // FK -> Medication

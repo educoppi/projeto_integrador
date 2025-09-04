@@ -14,7 +14,7 @@ export const MedicationController = {
             const m = await prisma.medication.create({
                 data: {
                     name,
-                    quantity,
+                    quantity:Number(quantity),
                     type,
                     expiresAt
                 }
