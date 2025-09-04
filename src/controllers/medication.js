@@ -1,4 +1,4 @@
-import prisma from '../prisma';
+import prisma from '../prisma.js';
 
 // CRUD
 // C - CREATE, INSERT, POST, SET, STORE

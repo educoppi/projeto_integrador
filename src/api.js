@@ -14,7 +14,7 @@ app.use(express.json()) // avisa que o app vai utilizar o protocolo JSON para a 
 app.use('/medications', medicationRoutes); // todas as rotas relacionadas a remédios vão utilizar essa rota
 app.use('/movements', movementRoutes);
 app.use('/users', userRoutes);
-app.use('/patient', patientRoutes);
+app.use('/patients', patientRoutes);
 
 //Middleware de erro simples
 app.use((err, _req, res, _next) => { // o _ antes do req e do next simboliza que eles não serão utilizados
