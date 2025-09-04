@@ -2,8 +2,10 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 
-import medicationRoutes from './routes/medication';
-import movementRoutes from './routes/movement';
+import medicationRoutes from './routes/medication.js';
+import movementRoutes from './routes/movement.js';
+import userRoutes from './routes/user.js';
+import patientRoutes from './routes/patient.js';
 
 const app = express(); // cria o app usando express
 app.use(cors()); // avisa que o app vai usar o cors (usado para saber quem pode chamar a api)
@@ -11,6 +13,8 @@ app.use(express.json()) // avisa que o app vai utilizar o protocolo JSON para a 
 
 app.use('/medications', medicationRoutes); // todas as rotas relacionadas a remédios vão utilizar essa rota
 app.use('/movements', movementRoutes);
+app.use('/users', userRoutes);
+app.use('/patient', patientRoutes);
 
 //Middleware de erro simples
 app.use((err, _req, res, _next) => { // o _ antes do req e do next simboliza que eles não serão utilizados

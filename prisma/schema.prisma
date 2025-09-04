@@ -20,7 +20,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+//Eduardo Coppi
 model User {
 
   id Int @id @default(autoincrement()) 
@@ -49,7 +49,7 @@ enum Role {
   PHARMACY
 }
 
-
+//Eduardo Coppi
 model Patient {
   id Int @id @default( autoincrement() )
   name String
@@ -60,7 +60,6 @@ model Patient {
   phone String
   address String
   allergyDescription String @map("allergy_description")
-  medicalRecord String @map("medical_record")
 
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt

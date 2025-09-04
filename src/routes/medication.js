@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {MedicationController} from '../controllers/medication' //importar a variável criada 
+import {MedicationController} from '../controllers/medication.js' //importar a variável criada 
 
 const route = Router();
 
