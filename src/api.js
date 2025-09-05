@@ -6,6 +6,8 @@ import medicationRoutes from './routes/medication.js';
 import movementRoutes from './routes/movement.js';
 import userRoutes from './routes/user.js';
 import patientRoutes from './routes/patient.js';
+import RecordRoutes from './routes/record.js';
+import ExamRoutes from './routes/exam.js';
 
 const app = express(); // cria o app usando express
 app.use(cors()); // avisa que o app vai usar o cors (usado para saber quem pode chamar a api)
@@ -15,6 +17,9 @@ app.use('/medications', medicationRoutes); // todas as rotas relacionadas a rem�
 app.use('/movements', movementRoutes);
 app.use('/users', userRoutes);
 app.use('/patients', patientRoutes);
+app.use('/records', RecordRoutes);
+app.use('/exams', ExamRoutes);
+
 
 //Middleware de erro simples
 app.use((err, _req, res, _next) => { // o _ antes do req e do next simboliza que eles não serão utilizados
