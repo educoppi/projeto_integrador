@@ -101,7 +101,7 @@ model Exam {
   @@map("exams")
 }
 
-
+//Sara
 model Prescription {
   id Int @id @default( autoincrement() )
   recordId Int @map("record_id") @unique

@@ -8,6 +8,7 @@ import userRoutes from './routes/user.js';
 import patientRoutes from './routes/patient.js';
 import RecordRoutes from './routes/record.js';
 import ExamRoutes from './routes/exam.js';
+import PrescriptionRoutes from './routes/prescription.js'
 
 const app = express(); // cria o app usando express
 app.use(cors()); // avisa que o app vai usar o cors (usado para saber quem pode chamar a api)
@@ -19,6 +20,7 @@ app.use('/users', userRoutes);
 app.use('/patients', patientRoutes);
 app.use('/records', RecordRoutes);
 app.use('/exams', ExamRoutes);
+app.use('/prescription', PrescriptionRoutes)
 
 
 //Middleware de erro simples
