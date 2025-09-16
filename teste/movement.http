@@ -4,7 +4,7 @@ content-type: application/json
 
 {
      "medicationId": 1,
-     "userId": 1 ,
+     "userId": 1,
      "quantity": 200,
      "date": "2025-09-04T19:51:38.868Z",
      "movementType": "OUTBOUND"
@@ -14,3 +14,4 @@ content-type: application/json
 
 GET http://localhost:3000/movements HTTP/1.1
 Content-Type: application/json
+
