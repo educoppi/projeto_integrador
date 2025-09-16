@@ -26,5 +26,14 @@ export const MedicationController = {
             next(err);
         }
 
+    },
+
+    async index(req, res, next){
+      
+        const medications = await prisma.medication.findMany()
+        
+        res.status(200).json(medications) //200 é o código de sucesso de retorno no prisma
     }
+
+
 }
