@@ -6,7 +6,7 @@ export const UserController = {
         try {
             const { name, lastName, password, cpf, phone, email, role } = req.body;
 
-            const u = await prisma.movement.create(
+            const u = await prisma.user.create(
                 {
                     data: {
                         name,
@@ -27,7 +27,14 @@ export const UserController = {
         }
     }, 
     async index(req, res, next){
-        const users = await prisma.user.findMany()
+
+        let query = {}
+
+        if (req.query.name) query = {name: req.query.name}
+        if (req.query.email) query = {name: req.query.email}
+        const users = await prisma.user.findMany({
+            where: query
+        })
 
         res.status(200).json(users)
     }

@@ -6,7 +6,7 @@ export const PatientController = {
         try {
             const { name, lastName, birth, cpf, email, phone, address, allergyDescription } = req.body;
 
-            const p = await prisma.movement.create(
+            const p = await prisma.patient.create(
                 {
                     data: {
                         name,
@@ -26,7 +26,13 @@ export const PatientController = {
         } catch (err) {
             next(err);
         }
+    },
+    async index(req, res, next){
+        const patients = await prisma.patient.findMany()
+
+        res.status(200).json(patients)
     }
+    
 }
 
 
