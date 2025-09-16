@@ -8,7 +8,7 @@
 
   import prisma from '../prisma.js';
 
-export const exam = {
+export const ExamController = {
 
     async store(req, res, next) {
         try {

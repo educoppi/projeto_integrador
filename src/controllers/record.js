@@ -1,6 +1,6 @@
 import prisma from '../prisma.js';
 
-export const Record = {
+export const RecordController = {
 
     async store(req, res, next) {
         try {

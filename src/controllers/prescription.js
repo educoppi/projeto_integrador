@@ -1,6 +1,6 @@
 import prisma from '../prisma.js';
 
-export const prescription = {
+export const PrescriptionController = {
 
     async store(req, res, next) {
         try {
