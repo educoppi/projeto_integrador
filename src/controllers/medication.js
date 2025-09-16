@@ -14,7 +14,7 @@ export const MedicationController = {
             const m = await prisma.medication.create({
                 data: {
                     name,
-                    quantity:Number(quantity),
+                    quantity: Number(quantity),
                     type,
                     expiresAt
                 }
@@ -28,10 +28,19 @@ export const MedicationController = {
 
     },
 
-    async index(req, res, next){
-      
-        const medications = await prisma.medication.findMany()
-        
+    async index(req, res, next) {
+
+        let query = {}
+
+        if (req.query.name) query = { name: req.query.name }
+        if (req.query.type) query = { type: req.query.type }
+        if (req.query.quantity) query = { quantity: req.query.quantity }
+        if (req.query.expiresAt) query = { expiresAt: req.query.expiresAt }
+
+        const medications = await prisma.medication.findMany({
+            where: query
+        })
+
         res.status(200).json(medications) //200 é o código de sucesso de retorno no prisma
     }
 
