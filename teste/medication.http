@@ -15,3 +15,14 @@ GET http://localhost:3000/medications HTTP/1.1
 Content-Type: application/json
 
 //GET não envia nada para o banco de dados, portanto não possui body
+// a ? depois do get é uma query, que precisa de uma chave e um valor que deseja ser buscado. ex: users?name=rafael&cpf=12345678910
+
+### Filtrar um medicamento por nome
+
+GET http://localhost:3000/medications?name=Paracetamol HTTP/1.1
+Content-Type: application/json
+
+### Filtrar um medicamento por tipo
+
+GET http://localhost:3000/medications?type=comprimidos HTTP/1.1
+Content-Type: application/json
