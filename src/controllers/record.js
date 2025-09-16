@@ -20,10 +20,9 @@ export const RecordController = {
         } catch (err) {
             next(err);
         }
+    },
+    async index(req,res,next){
+        const records =await prisma.record.findMany()
+        res.status(200).json(records)
     }
 }
-/*
-model Record {
-  
-  patientId Int @map("patient_id")
-  appointmentDate DateTime @map("appointment_date")*/

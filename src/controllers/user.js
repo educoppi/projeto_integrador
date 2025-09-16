@@ -25,5 +25,10 @@ export const UserController = {
         } catch (err) {
             next(err);
         }
+    }, 
+    async index(req, res, next){
+        const users = await prisma.user.findMany()
+
+        res.status(200).json(users)
     }
 }
