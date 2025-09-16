@@ -1,5 +1,6 @@
+### Criando um medicamento
 POST http://localhost:3000/medications HTTP/1.1
-content-type: application/json 
+Content-Type: application/json 
 
 {
      "name": "Paracetamol",
@@ -7,3 +8,10 @@ content-type: application/json
      "type": "comprimidos",
      "expiresAt": "2025-09-04T19:51:38.868Z"
 }
+
+### Ler um medicamento
+
+GET http://localhost:3000/medications HTTP/1.1
+Content-Type: application/json
+
+//GET não envia nada para o banco de dados, portanto não possui body
