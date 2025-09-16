@@ -1,5 +1,7 @@
+### Criando um usuário
+
 POST http://localhost:3000/users HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 
 {
     "name":"Eduardo",
@@ -10,3 +12,8 @@ content-type: application/json
     "email":"educoppi8@gmail.com",
     "role":"RECEPCIONIST"
 }
+
+### Ler todos os Usuários
+
+GET http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
