@@ -4,5 +4,6 @@ import {MedicationController} from '../controllers/medication.js' //importar a v
 const route = Router();
 
 route.post('/', MedicationController.store); // recebe dois parametros: caminho e função
+route.get('/', MedicationController.index);
 
 export default route; 
