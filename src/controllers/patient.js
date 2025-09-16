@@ -6,7 +6,7 @@ export const PatientController = {
         try {
             const { name, lastName, birth, cpf, email, phone, address, allergyDescription } = req.body;
 
-            const p = await prisma.movement.create(
+            const p = await prisma.patient.create(
                 {
                     data: {
                         name,

@@ -1,9 +1,4 @@
-/* recordId Int @map("record_id") @unique
-  date DateTime
-  type String
-  result String
-  observation String
-  */
+
 
 
   import prisma from '../prisma.js';
@@ -32,5 +27,11 @@ export const ExamController = {
         } catch (err) {
             next(err);
         }
+    },
+    async index(req,res,next){
+        const exams = await prisma.exam.findMany()
+        res.status(200).json(exams)
     }
+
+
 }

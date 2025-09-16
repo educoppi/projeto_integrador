@@ -1,10 +1,10 @@
-POST http://localhost:3000/patient HTTP/1.1
+POST http://localhost:3000/patients HTTP/1.1
 content-type: application/json
 
 {
     "name":"Rafael",
     "lastName":"Sedai",
-    "birth":"1994-08-21",
+    "birth":"2025-09-04T19:51:38.868Z",
     "cpf":"12345678911",
     "email":"educoppi8@gmail.com",
     "phone":"16994030052",
