@@ -22,5 +22,9 @@ export const PrescriptionController = {
         } catch (err) {
             next(err);
         }
+    },
+    async index(req,res,next){
+        const prescriptions = await prisma.prescription.findMany()
+        res.status(200).json(prescriptions)
     }
 }

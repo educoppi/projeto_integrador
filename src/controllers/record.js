@@ -6,14 +6,12 @@ export const RecordController = {
         try {
             const {patientId, appointmentDate  } = req.body;
 
-            const r = await prisma.record.create(
-                {
-                    data: {
-                       patientId: Number(patientId),
-                       appointmentDate: appointmentDate
-                    }
+            const r = await prisma.record.create({
+                data: {
+                    patientId: Number(patientId),
+                    appointmentDate: new Date(appointmentDate)
                 }
-            );
+            });
 
             res.status(201).json(r);
 
@@ -22,7 +20,10 @@ export const RecordController = {
         }
     },
     async index(req,res,next){
-        const records =await prisma.record.findMany()
+        let query ={}
+        if (req.query.patientId) query = {patientId: Number(req.query.patientId)}
+        if (req.query.appointmentDate) query = {appointmentDate: new Date(req.query.appointmentDate)}
+        const records = await prisma.record.findMany()
         res.status(200).json(records)
     }
 }

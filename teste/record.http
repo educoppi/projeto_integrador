@@ -1,10 +1,21 @@
-POST http://localhost:3000/users HTTP/1.1
+### aqui criar um record
+POST http://localhost:3000/records HTTP/1.1
 Content-Type: application/json
 
 {
     "patientId": 1,
-    "appointmentDate":"2025-09-17T19:51:38.868Z"
+    "appointmentDate":"2025-09-05"
 }
 
-GET http://localhost:3000/users HTTP/1.1
+### aqui busca todos
+GET http://localhost:3000/records HTTP/1.1
+Content-Type: application/json
+
+### Ler records(histórico) de um paciente específico(no caso com id 1)
+
+get http://localhost:3000/records?patientId=1 HTTP/1.1
+Content-Type: application/json
+
+### ler appointments de um paciente específico(no caso com id 1)
+get http://localhost:3000/records?appointments="2025-09-05"HTTP/1.1
 Content-Type: application/json

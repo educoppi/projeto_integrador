@@ -6,7 +6,7 @@ import medicationRoutes from './routes/medication.js';
 import movementRoutes from './routes/movement.js';
 import userRoutes from './routes/user.js';
 import patientRoutes from './routes/patient.js';
-import RecordRoutes from './routes/record.js';
+import recordRoutes from './routes/record.js';
 import ExamRoutes from './routes/exam.js';
 import PrescriptionRoutes from './routes/prescription.js'
 
@@ -18,9 +18,9 @@ app.use('/medications', medicationRoutes); // todas as rotas relacionadas a rem√
 app.use('/movements', movementRoutes);
 app.use('/users', userRoutes);
 app.use('/patients', patientRoutes);
-app.use('/records', RecordRoutes);
+app.use('/records', recordRoutes);
 app.use('/exams', ExamRoutes);
-app.use('/prescription', PrescriptionRoutes)
+app.use('/prescriptions', PrescriptionRoutes)
 
 
 //Middleware de erro simples
