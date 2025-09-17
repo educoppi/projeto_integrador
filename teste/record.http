@@ -19,3 +19,12 @@ Content-Type: application/json
 ### ler appointments de um paciente específico(no caso com id 1)
 get http://localhost:3000/records?appointments="2025-09-05"HTTP/1.1
 Content-Type: application/json
+
+
+### ler usuario pelo id------------ um intem
+get http://localhost:3000/records/1  HTTP/1.1
+Content-Type: application/json
+
+### deletar um record pelo id
+DELETE http://localhost:3000/records/2 HTTP/1.1
+Content-Type: application/json

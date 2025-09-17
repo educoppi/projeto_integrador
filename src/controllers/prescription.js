@@ -24,7 +24,44 @@ export const PrescriptionController = {
         }
     },
     async index(req,res,next){
-        const prescriptions = await prisma.prescription.findMany()
+
+        let query = {}
+
+        if (req.query.recordId) query = {recordId: Number(req.query.recordId)}
+        if (req.query.medicationId) query = {medicationId: Number(req.query.medicationId)}
+        if (req.query.quantity) query = {quantity:{gte: Number(req.query.quantity)}}
+
+
+        const prescriptions = await prisma.prescription.findMany({ 
+            where: query
+         })
+
         res.status(200).json(prescriptions)
+    },
+    async show(req, res, _next) {
+        try{
+            const id = Number(req.params.id)
+    
+            const p = await prisma.prescription.findFirstOrThrow({
+                where: {id}
+            })
+    
+            res.status(200).json(p)
+        }catch(err){
+            res.status(404).json({error:"Prescrição não encontrada"});
+        }
+    },
+    async del(req,res,_next) {
+        try{
+            const id = Number(req.params.id)
+    
+            const p = await prisma.prescription.delete({
+                where: {id}
+            })
+    
+            res.status(200).json(p)
+        }catch(err){
+            res.status(404).json({error:"Prescrição deletada"});
+        }
     }
 }
