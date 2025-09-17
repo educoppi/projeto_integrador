@@ -1,7 +1,4 @@
-
-
-
-  import prisma from '../prisma.js';
+import prisma from '../prisma.js';
 
 export const ExamController = {
 
@@ -28,12 +25,7 @@ export const ExamController = {
             next(err);
         }
     },
-    async index(req,res,next){
-        
-        let query = {}
-
-=======
-<<<<<<< HEAD
+    async index(req,res, next){
         
         let query = {}
 
@@ -42,32 +34,11 @@ export const ExamController = {
         if (req.query.type) query = {type: req.query.type}
         if (req.query.result) query = {result: req.query.result}
         if (req.query.observation) query = {observation: req.query.observation}
-        
+
 
         const exams = await prisma.exam.findMany({
             where: query
         })
-<<<<<<< HEAD
-=======
-=======
-        let query ={}
->>>>>>> 5e7657d04c81354332bbd69bebb8f33137852cb3
-        if (req.query.recordId) query = {recordId: Number(req.query.recordId)}
-        if (req.query.date) query = {date: new Date(req.query.date)}
-        if (req.query.type) query = {type: req.query.type}
-        if (req.query.result) query = {result: req.query.result}
-        if (req.query.observation) query = {observation: req.query.observation}
-<<<<<<< HEAD
-        
-
-        const exams = await prisma.exam.findMany({
-            where: query
-        })
-=======
-        const exams = await prisma.exam.findMany()
->>>>>>> c489db9e7f543c87e6ef38727dee0012fe062df1
->>>>>>> 5e7657d04c81354332bbd69bebb8f33137852cb3
->>>>>>> 226a045df3455a87bdfa827a736fa5f325f645a0
         res.status(200).json(exams)
     }
 
