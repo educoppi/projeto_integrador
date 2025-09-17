@@ -28,20 +28,18 @@ export const PatientController = {
         }
     },
     async index(req, res, next){
-        const patients = await prisma.patient.findMany()
+
+        let query = {}
+
+        if (req.query.name) query = {name: req.query.name}
+        if (req.query.email) query = {email: req.query.email}
+        if (req.query.cpf) query = {cpf: req.query.cpf}
+
+        const patients = await prisma.patient.findMany({
+            where: query
+        })
 
         res.status(200).json(patients)
     }
     
 }
-
-
-/*   name String
-  lastName String @map("last_name")
-  birth DateTime
-  cpf String @unique
-  email String @unique
-  phone String
-  address String
-  allergyDescription String @map("allergy_description")
-  medicalRecord String @map("medical_record") */

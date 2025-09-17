@@ -20,6 +20,9 @@ export const RecordController = {
         }
     },
     async index(req,res,next){
+        let query ={}
+        if (req.query.patientId) query = {patientId: Number(req.query.patientId)}
+        if (req.query.appointmentDate) query = {appointmentDate: new Date(req.query.appointmentDate)}
         const records = await prisma.record.findMany()
         res.status(200).json(records)
     }
