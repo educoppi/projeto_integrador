@@ -16,6 +16,10 @@ GET http://localhost:3000/exams HTTP/1.1
 Content-Type: application/json
 
 
+<<<<<<< HEAD
+### busca por recordId
+=======
+<<<<<<< HEAD
 ### busca por recordId
 GET http://localhost:3000/exams?recordId=1 HTTP/1.1
 Content-Type: application/json
@@ -29,6 +33,25 @@ GET http://localhost:3000/exams?type=raio-x HTTP/1.1
 Content-Type: application/json
 
 ### busca por result
+=======
+###  buscar por recordId
+>>>>>>> 5e7657d04c81354332bbd69bebb8f33137852cb3
+GET http://localhost:3000/exams?recordId=1 HTTP/1.1
+Content-Type: application/json
+ 
+### busca por date
+GET http://localhost:3000/exams?date=2025-09-04T19:51:38.868Z HTTP/1.1
+Content-Type: application/json
+
+### busca por type
+GET http://localhost:3000/exams?type=raio-x HTTP/1.1
+Content-Type: application/json
+
+<<<<<<< HEAD
+### busca por result
+=======
+>>>>>>> c489db9e7f543c87e6ef38727dee0012fe062df1
+>>>>>>> 5e7657d04c81354332bbd69bebb8f33137852cb3
 GET http://localhost:3000/exams?result=perna quebrada HTTP/1.1
 Content-Type: application/json
 
