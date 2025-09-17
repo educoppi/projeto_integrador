@@ -8,8 +8,6 @@ Content-Type: application/json
     "type": "raio-x",
     "result":"perna quebrada",
     "observation":"precisa de remedio"
-     
-   
 }
 
 ### Ler um exame
@@ -18,19 +16,19 @@ GET http://localhost:3000/exams HTTP/1.1
 Content-Type: application/json
 
 
-###  buscar por recordId
+### busca por recordId
 GET http://localhost:3000/exams?recordId=1 HTTP/1.1
 Content-Type: application/json
+ 
 ### busca por date
-
 GET http://localhost:3000/exams?date=2025-09-04T19:51:38.868Z HTTP/1.1
 Content-Type: application/json
-### busca por type
 
+### busca por type
 GET http://localhost:3000/exams?type=raio-x HTTP/1.1
 Content-Type: application/json
-### busca por result
 
+### busca por result
 GET http://localhost:3000/exams?result=perna quebrada HTTP/1.1
 Content-Type: application/json
 

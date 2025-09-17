@@ -24,7 +24,18 @@ export const PrescriptionController = {
         }
     },
     async index(req,res,next){
-        const prescriptions = await prisma.prescription.findMany()
+
+        let query = {}
+
+        if (req.query.recordId) query = {recordId: Number(req.query.recordId)}
+        if (req.query.medicationId) query = {medicationId: Number(req.query.medicationId)}
+        if (req.query.quantity) query = {quantity:{gte: Number(req.query.quantity)}}
+
+
+        const prescriptions = await prisma.prescription.findMany({ 
+            where: query
+         })
+
         res.status(200).json(prescriptions)
     }
 }

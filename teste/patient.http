@@ -18,3 +18,16 @@ Content-Type: application/json
 
 GET http://localhost:3000/patients HTTP/1.1
 Content-Type: application/json
+
+### Ler os pacientes que começam com o nome Rafael
+
+GET http://localhost:3000/patients?name=Rafael HTTP/1.1
+Content-Type: application/json
+
+### Ler todos os Usuários que começam o cpf
+
+GET http://localhost:3000/patients?cpf=12345678911 HTTP/1.1
+Content-Type: application/json
+
+
+
