@@ -27,3 +27,13 @@ Content-Type: application/json
 
 GET http://localhost:3000/medications?type=comprimidos HTTP/1.1
 Content-Type: application/json
+
+### Ler um medicamento pelo id (depois da ultima barra temos um "params" ( chamado no controller por req.params))
+
+GET http://localhost:3000/users/1 HTTP/1.1
+Content-Type: application/json
+
+### Delete um medicamento pelo id
+
+DELETE http://localhost:3000/users/2 HTTP/1.1
+Content-Type: application/json
