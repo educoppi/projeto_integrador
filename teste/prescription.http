@@ -30,6 +30,7 @@ GET http://localhost:3000/prescriptions/1  HTTP/1.1
 Content-Type: application/json
 
 ### deleta um id
+<<<<<<< HEAD
 DELETE  http://localhost:3000/prescriptions/4 HTTP/1.1
 Content-Type: application/json
 
@@ -40,3 +41,7 @@ Content-Type: application/json
 {
     "quantity" : 30
 }
+=======
+DELETE  http://localhost:3000/prescriptions/1 HTTP/1.1
+Content-Type: application/json
+>>>>>>> 877dce7a7d195a8010a41605500bc903695597bc
