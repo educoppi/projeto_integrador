@@ -63,5 +63,24 @@ export const PrescriptionController = {
         }catch(err){
             res.status(404).json({error:"Prescrição deletada"});
         }
+    },
+    async update(req,res,_next) {
+        try{
+            const id = Number(req.params.id);
+            const quantity = Number(req.body.quantity);
+
+            const prescription = await prisma.prescription.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    quantity: quantity
+                }
+            })
+
+            res.status(200).json(prescription)
+        }catch(err){
+            res.status(404).json({error:"Erro prescrição não atualizada"})
+        }
     }
 }
