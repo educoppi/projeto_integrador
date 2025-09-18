@@ -25,15 +25,15 @@ export const MovementController = {
             next(err);
         }
     },
-
     async index(req, res, next) {
 
         let query = {}
 
-        if (req.query.name) query = { name: req.query.name }
-        if (req.query.type) query = { type: req.query.type }
+        if (req.query.medicationId) query = { medicationId: req.query.medicationId }
+        if (req.query.userId) query = { userId: req.query.userId }
+        if (req.query.date) query = { date: req.query.date }
         if (req.query.quantity) query = { quantity: req.query.quantity }
-        if (req.query.expiresAt) query = { expiresAt: req.query.expiresAt }
+        if (req.query.movementType) query = { movementType: req.query.movementType }
 
         const medications = await prisma.movement.findMany({
             where: query
@@ -69,6 +69,28 @@ export const MovementController = {
 
         } catch (err) {
             res.status(404).json({ error: "Usuário não encontrado" });
+        }
+    },
+    async update(req, res, _next) {
+        try {
+            const id = Number(req.params.id);
+
+            let update = {}
+
+
+            if (req.body.quantity) update.quantity = req.body.quantity
+            if (req.body.movementType) update.movementType = req.body.movementType
+
+            
+            const medication = await prisma.movement.update({
+                where: { id },
+                data: update
+            });
+
+            res.status(200).json(movement);
+
+        } catch (err) {
+            res.status(404).json({ error: "Movimentação não encontrada" });
         }
     }
 }

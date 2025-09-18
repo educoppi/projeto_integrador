@@ -52,7 +52,7 @@ export const MedicationController = {
                 where: { id }
             }); //função para encontrar o primeiro user com a id especificada, se não encontrar retorna um erro
 
-            res.status(200).json(u);
+            res.status(200).json(medications);
 
         } catch (err) {
             res.status(404).json({ error: "Usuário não encontrado" });
@@ -65,12 +65,35 @@ export const MedicationController = {
             // funções assincronas precisam do await
             const u = await prisma.medication.delete({
                 where: { id }
-            }); //função para encontrar o primeiro user com a id especificada, se não encontrar retorna um erro
+            }); //função para encontrar o primeiro medicamento com a id especificada, se não encontrar retorna um erro
 
-            res.status(200).json(u);
+            res.status(200).json(medications);
 
         } catch (err) {
-            res.status(404).json({ error: "Usuário não encontrado" });
+            res.status(404).json({ error: "Medicamento não encontrado" });
+        }
+    },
+    async update(req, res, _next) {
+        try {
+            const id = Number(req.params.id);
+
+            let update = {}
+
+            if (req.body.name) update.name = req.body.name 
+            if (req.body.type) update.type = req.body.type 
+            if (req.body.quantity) update.quantity = req.body.quantity
+            if (req.body.expiresAt) update.expiresAt = req.body.expiresAt
+
+            
+            const medication = await prisma.medication.update({
+                where: { id },
+                data: update
+            });
+
+            res.status(200).json(medication);
+
+        } catch (err) {
+            res.status(404).json({ error: "Medicamento não encontrado" });
         }
     }
 

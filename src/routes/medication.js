@@ -7,5 +7,6 @@ route.post('/', MedicationController.store); // recebe dois parametros: caminho 
 route.get('/', MedicationController.index);
 route.get('/:id', MedicationController.show);
 route.delete('/:id', MedicationController.delete);
+route.put('/:id', MedicationController.update);
 
 export default route; 
