@@ -5,5 +5,8 @@ const route = Router();
 
 route.post('/', MedicationController.store); // recebe dois parametros: caminho e função
 route.get('/', MedicationController.index);
+route.get('/:id', MedicationController.show);
+route.delete('/:id', MedicationController.delete);
+route.put('/:id', MedicationController.update);
 
 export default route; 
