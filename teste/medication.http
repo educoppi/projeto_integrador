@@ -44,5 +44,6 @@ PUT http://localhost:3000/medications/1 HTTP/1.1
 Content-Type: application/json
 
 {
-     "name" : "Paracetamol 1G"
+     "name" : "Paracetamol",
+     "quantity" : 300
 }

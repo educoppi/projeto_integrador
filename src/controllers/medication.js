@@ -81,7 +81,7 @@ export const MedicationController = {
 
             if (req.body.name) update.name = req.body.name 
             if (req.body.type) update.type = req.body.type 
-            if (req.body.quantity) update.quantity = req.body.quantity
+            if (req.body.quantity) update.quantity = Number(req.body.quantity)
             if (req.body.expiresAt) update.expiresAt = req.body.expiresAt
 
             
