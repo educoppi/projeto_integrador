@@ -71,7 +71,7 @@ export const MovementController = {
             res.status(404).json({ error: "Usuário não encontrado" });
         }
     },
-    async update(req, res, _next) {
+    async update(req, res, next) {
         try {
             const id = Number(req.params.id);
 
@@ -90,7 +90,7 @@ export const MovementController = {
             res.status(200).json(movement);
 
         } catch (err) {
-            res.status(404).json({ error: "Movimentação não encontrada" });
+            next(err);
         }
     }
 }
