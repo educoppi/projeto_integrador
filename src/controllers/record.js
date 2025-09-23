@@ -6,13 +6,25 @@ export const RecordController = {
     async store(req, res, next) {
         try {
             const { patientId, appointmentDate } = req.body;
+            let p = await prisma.patient.findFirst({
+                where: { id: Number(patientId) }
 
-            const r = await prisma.record.create({
+
+
+            });
+            if(!p){
+                res.status(301).json({ error: "Paciente não encontrado" })
+                return
+            }
+            
+                const r = await prisma.record.create({
                 data: {
                     patientId: Number(patientId),
                     appointmentDate: new Date(appointmentDate)
                 }
+                    
             });
+            
 
             res.status(201).json(r);
 
@@ -80,5 +92,5 @@ export const RecordController = {
             res.status(404).json({ error: "erro" })
 
         }
-    }
+    },
 }

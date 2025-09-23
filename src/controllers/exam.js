@@ -5,6 +5,16 @@ export const ExamController = {
     async store(req, res, next) {
         try {
             const {recordId, date, type, result, observation } = req.body;
+               
+            let r = await prisma.record.findFirst({
+                where: { id: Number(recordId) }
+            });
+            if(!r){
+                res.status(301).json({ error: "Prontuário não encontrado" })
+                return
+            }
+            
+
 
             const e = await prisma.exam.create(
                 {

@@ -6,6 +6,29 @@ export const PrescriptionController = {
         try {
             const {recordId, medicationId, quantity} = req.body;
 
+            let r = await prisma.record.findFirst({
+                where: {id: Number(recordId)}
+            });
+
+            if(!r){
+                res.status(301).json({
+                    'error':"Record informado não encontrado"
+                });
+                return
+            }
+
+            let m = await prisma.medication.findFirst({
+                where: {id: Number(medicationId)}
+            });
+
+            if(!m){
+                res.status(301).json({
+                    'error':"Medication informado não encontrado"
+                });
+                return
+            }
+
+
             const p = await prisma.prescription.create(
                 {
                     data: {
