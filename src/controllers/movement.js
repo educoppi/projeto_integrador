@@ -29,11 +29,11 @@ export const MovementController = {
 
         let query = {}
 
-        if (req.query.medicationId) query = { medicationId: req.query.medicationId }
-        if (req.query.userId) query = { userId: req.query.userId }
-        if (req.query.date) query = { date: req.query.date }
-        if (req.query.quantity) query = { quantity: req.query.quantity }
-        if (req.query.movementType) query = { movementType: req.query.movementType }
+        if (req.query.medicationId) query.medicationId = req.query.medicationId
+        if (req.query.userId) query.userId = req.query.userId
+        if (req.query.date) query.date = req.query.date
+        if (req.query.quantity) query.quantity = req.query.quantity
+        if (req.query.movementType) query.movementType = req.query.movementType
 
         const medications = await prisma.movement.findMany({
             where: query
@@ -71,7 +71,7 @@ export const MovementController = {
             res.status(404).json({ error: "Usuário não encontrado" });
         }
     },
-    async update(req, res, _next) {
+    async update(req, res, next) {
         try {
             const id = Number(req.params.id);
 
@@ -90,7 +90,7 @@ export const MovementController = {
             res.status(200).json(movement);
 
         } catch (err) {
-            res.status(404).json({ error: "Movimentação não encontrada" });
+            next(err);
         }
     }
 }

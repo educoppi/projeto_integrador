@@ -32,10 +32,10 @@ export const MedicationController = {
 
         let query = {}
 
-        if (req.query.name) query = { name: req.query.name }
-        if (req.query.type) query = { type: req.query.type }
-        if (req.query.quantity) query = { quantity: req.query.quantity }
-        if (req.query.expiresAt) query = { expiresAt: req.query.expiresAt }
+        if (req.query.name) query.name = req.query.name 
+        if (req.query.type) query.type = req.query.type
+        if (req.query.quantity) query.quantity = req.query.quantity
+        if (req.query.expiresAt) query.expiresAt = req.query.expiresAt
 
         const medications = await prisma.medication.findMany({
             where: query
@@ -73,7 +73,7 @@ export const MedicationController = {
             res.status(404).json({ error: "Medicamento não encontrado" });
         }
     },
-    async update(req, res, _next) {
+    async update(req, res, next) {
         try {
             const id = Number(req.params.id);
 
@@ -93,9 +93,8 @@ export const MedicationController = {
             res.status(200).json(medication);
 
         } catch (err) {
-            res.status(404).json({ error: "Medicamento não encontrado" });
+            next(err);
         }
     }
-
 
 }

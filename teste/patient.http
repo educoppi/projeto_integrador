@@ -27,11 +27,7 @@ Content-Type: application/json
 ### Ler todos os Usuários que começam o cpf
 
 GET http://localhost:3000/patients?cpf=12345678911 HTTP/1.1
-<<<<<<< HEAD
 Content-Type: application/json
 
 
 
-=======
-Content-Type: application/json
->>>>>>> 5e7657d04c81354332bbd69bebb8f33137852cb3
