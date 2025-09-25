@@ -143,6 +143,7 @@ model Movement {
 
   medicationId Int @map("medication_id")
   userId Int @map("user_id")
+  doctorId Int @map("user_id")
   date DateTime
   quantity Int 
   movementType MovementType @map("movement_type")
@@ -150,6 +151,8 @@ model Movement {
   // FK -> Medication
   medication Medication @relation(fields: [medicationId], references: [id])
   user User @relation(fields: [userId], references:[id])
+  doctor User @relation(fields: [doctorId], references:[id])
+
 
   @@map("movements")
 }
