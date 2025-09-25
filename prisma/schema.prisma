@@ -76,6 +76,7 @@ model Record {
   userId Int @map("user_id")
   patientId Int @map("patient_id")
   appointmentDate DateTime @map("appointment_date")
+  anotacao String
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
 

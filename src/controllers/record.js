@@ -5,7 +5,7 @@ export const RecordController = {
     //c - CREATE,INSERT,POST,SET,STORE
     async store(req, res, next) {
         try {
-            const { patientId, appointmentDate } = req.body;
+            const { patientId, appointmentDate, anotacao } = req.body;
             let p = await prisma.patient.findFirst({
                 where: { id: Number(patientId) }
 
@@ -20,7 +20,8 @@ export const RecordController = {
                 const r = await prisma.record.create({
                 data: {
                     patientId: Number(patientId),
-                    appointmentDate: new Date(appointmentDate)
+                    appointmentDate: new Date(appointmentDate),
+                    anotacao:anotacao
                 }
                     
             });
