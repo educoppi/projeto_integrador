@@ -4,7 +4,8 @@ Content-Type: application/json
 
 {
     "patientId": 1,
-    "appointmentDate":"2025-09-05"
+    "appointmentDate":"2025-09-05",
+    "anotacao":"Paciente com dor de cabeça e febre a 3 dias e risco de trauma"
 }
 
 ### aqui busca todos
