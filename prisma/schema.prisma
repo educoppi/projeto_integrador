@@ -36,7 +36,8 @@ model User {
   updatedAt DateTime @map("update_at") @updatedAt
 
   records Record[]
-  movements Movement[] 
+  movementsAsUser   Movement[] @relation("MovementUser")
+  movementsAsDoctor Movement[] @relation("MovementDoctor")
   
   @@map("users")
 }
@@ -147,13 +148,16 @@ model Movement {
 
   medicationId Int @map("medication_id")
   userId Int @map("user_id")
+  doctorId Int @map("doctor_id")
   date DateTime
   quantity Int 
   movementType MovementType @map("movement_type")
 
   // FK -> Medication
   medication Medication @relation(fields: [medicationId], references: [id])
-  user User @relation(fields: [userId], references:[id])
+  user User @relation("MovementUser", fields: [userId], references:[id])
+  doctor User @relation("MovementDoctor", fields: [doctorId], references:[id])
+
 
   @@map("movements")
 }
