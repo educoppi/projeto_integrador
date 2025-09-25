@@ -3,9 +3,10 @@ POST http://localhost:3000/records HTTP/1.1
 Content-Type: application/json
 
 {
-    "patientId": 1,
+    "patientId":1,
     "appointmentDate":"2025-09-05",
-    "anotacao":"Paciente com dor de cabeça e febre a 3 dias e risco de trauma"
+    "anotacao":"Paciente com dor de cabeça e febre a 3 dias e risco de trauma",
+    "userId":2
 }
 
 ### aqui busca todos

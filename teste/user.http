@@ -3,13 +3,13 @@ POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Eduardo",
+    "name":"Fernando",
     "lastName":"Coppi",
     "password":"123456",
     "cpf":"12345678910",
     "phone":"16994030052",
     "email":"educoppi8@gmail.com",
-    "role":"RECEPCIONIST"
+    "role":"PACIENT"
 } 
 
 ### Ler todos os Usuários
