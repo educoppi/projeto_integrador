@@ -10,6 +10,8 @@ export const MedicationController = {
         try {
             const { name, quantity, type, expiresAt } = req.body; //dentro das variáveis vão os itens da tabela, caso tenha camel case, precisa estar exatamente igual
 
+
+
             //nome da const é primeira letra do modelo 
             const m = await prisma.medication.create({
                 data: {
@@ -28,13 +30,22 @@ export const MedicationController = {
 
     },
 
-    async index(req, res, next) {
+    async index(req, res, _next) {
 
         let query = {}
 
-        if (req.query.name) query.name = req.query.name 
+        if (req.query.name) query.name = req.query.name
+
         if (req.query.type) query.type = req.query.type
-        if (req.query.quantity) query.quantity = req.query.quantity
+
+        if (req.query.quantity) query.quantity = Number(req.query.quantity)
+
+        if (req.query.min) query.quantity = { lt: Number(req.query.min) }
+        if (req.query.minig) query.quantity = { lte: Number(req.query.minig) }
+        if (req.query.max) query.quantity = { gt: Number(req.query.max) }
+        if (req.query.maxig) query.quantity = { gte: Number(req.query.maxig) }
+
+
         if (req.query.expiresAt) query.expiresAt = req.query.expiresAt
 
         const medications = await prisma.medication.findMany({
@@ -48,14 +59,14 @@ export const MedicationController = {
             const id = Number(req.params.id);  //PRECISA DO NUMBER PQ O JSON TRANSFORMA TUDO EM STRING
 
             // funções assincronas precisam do await
-            const u = await prisma.medication.findFirstOrThrow({
+            const medications = await prisma.medication.findFirstOrThrow({
                 where: { id }
             }); //função para encontrar o primeiro user com a id especificada, se não encontrar retorna um erro
 
             res.status(200).json(medications);
 
         } catch (err) {
-            res.status(404).json({ error: "Usuário não encontrado" });
+            res.status(404).json({ error: "Medicamento não encontrado" });
         }
     },
     async delete(req, res, _next) {
@@ -63,7 +74,7 @@ export const MedicationController = {
             const id = Number(req.params.id);  //PRECISA DO NUMBER PQ O JSON TRANSFORMA TUDO EM STRING
 
             // funções assincronas precisam do await
-            const u = await prisma.medication.delete({
+            const medications = await prisma.medication.delete({
                 where: { id }
             }); //função para encontrar o primeiro medicamento com a id especificada, se não encontrar retorna um erro
 
@@ -79,12 +90,12 @@ export const MedicationController = {
 
             let update = {}
 
-            if (req.body.name) update.name = req.body.name 
-            if (req.body.type) update.type = req.body.type 
+            if (req.body.name) update.name = req.body.name
+            if (req.body.type) update.type = req.body.type
             if (req.body.quantity) update.quantity = Number(req.body.quantity)
             if (req.body.expiresAt) update.expiresAt = req.body.expiresAt
 
-            
+
             const medication = await prisma.medication.update({
                 where: { id },
                 data: update

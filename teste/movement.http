@@ -5,6 +5,7 @@ content-type: application/json
 {
      "medicationId": 1,
      "userId": 1,
+     "doctorId": 1,
      "quantity": 200,
      "date": "2025-09-04T19:51:38.868Z",
      "movementType": "OUTBOUND"
