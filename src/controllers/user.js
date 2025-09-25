@@ -5,7 +5,7 @@ export const UserController = {
     async store(req, res, next) {
         try {
             const { name, lastName, password, cpf, phone, email, role } = req.body;
-
+            
             const u = await prisma.user.create(
                 {
                     data: {
