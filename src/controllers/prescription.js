@@ -4,9 +4,9 @@ export const PrescriptionController = {
 
     async store(req, res, next) {
         try {
-            const {recordId, medicationId, quantity} = req.body;
+            const {recordId, medicationId, quantity, observation} = req.body;
 
-            let r = await prisma.record.findFirst({
+           let r = await prisma.record.findFirst({
                 where: {id: Number(recordId)}
             });
 
@@ -34,8 +34,8 @@ export const PrescriptionController = {
                     data: {
                           recordId: Number(recordId),
                           medicationId: Number(medicationId),
-                          quantity: Number(quantity)
-                       
+                          quantity: Number(quantity),
+                          observation: observation
                     }
                 }
             );
@@ -53,6 +53,7 @@ export const PrescriptionController = {
         if (req.query.recordId) query = {recordId: Number(req.query.recordId)}
         if (req.query.medicationId) query = {medicationId: Number(req.query.medicationId)}
         if (req.query.quantity) query = {quantity:{gte: Number(req.query.quantity)}}
+        if (req.query.observation) query = {observation: req.query.observation}
 
 
         const prescriptions = await prisma.prescription.findMany({ 

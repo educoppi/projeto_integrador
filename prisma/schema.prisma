@@ -35,7 +35,9 @@ model User {
   createdAt DateTime  @map("created_at") @default(now())
   updatedAt DateTime @map("update_at") @updatedAt
 
-  movements Movement[] 
+  records Record[]
+  movementsAsUser   Movement[] @relation("MovementUser")
+  movementsAsDoctor Movement[] @relation("MovementDoctor")
   
   @@map("users")
 }
@@ -71,12 +73,14 @@ model Patient {
 //Eduardo Lombardo
 model Record {
   id Int @id @default( autoincrement() )
+  userId Int @map("user_id")
   patientId Int @map("patient_id")
   appointmentDate DateTime @map("appointment_date")
   anotacao String
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
 
+  user User @relation(fields: [userId], references: [id])
   patient Patient @relation(fields: [patientId], references: [id])
 
   exam Exam?
@@ -108,6 +112,7 @@ model Prescription {
   recordId Int @map("record_id") @unique
   medicationId Int @map("medication_id") 
   quantity Int
+  observation String
 
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
@@ -144,13 +149,16 @@ model Movement {
 
   medicationId Int @map("medication_id")
   userId Int @map("user_id")
+  doctorId Int @map("doctor_id")
   date DateTime
   quantity Int 
   movementType MovementType @map("movement_type")
 
   // FK -> Medication
   medication Medication @relation(fields: [medicationId], references: [id])
-  user User @relation(fields: [userId], references:[id])
+  user User @relation("MovementUser", fields: [userId], references:[id])
+  doctor User @relation("MovementDoctor", fields: [doctorId], references:[id])
+
 
   @@map("movements")
 }

@@ -5,7 +5,8 @@ Content-Type: application/json
 {
     "recordId": 1,
     "medicationId":1,
-    "quantity":10
+    "quantity":10,
+    "observation": "aqui deve escrever uma observação"
 }
 
 ### aqui busca todos
