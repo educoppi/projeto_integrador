@@ -110,6 +110,7 @@ model Prescription {
   recordId Int @map("record_id") @unique
   medicationId Int @map("medication_id") 
   quantity Int
+  observation String
 
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
