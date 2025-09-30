@@ -1,3 +1,5 @@
+@token = token
+
 ### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
@@ -45,7 +47,7 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/users/1 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {@token}
+Authorization: Bearer {{token}}
 
 ### Atualiza o usuario
 PUT http://localhost:3000/users/4 HTTP/1.1
