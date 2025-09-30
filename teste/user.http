@@ -9,12 +9,22 @@ Content-Type: application/json
     "cpf":"12345678910",
     "phone":"16994030052",
     "email":"educoppi8@gmail.com",
-    "role":"PACIENT"
+    "role":"PATIENT"
+} 
+
+### LOGIN
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "senha":"123456",
+    "cpf":"12345678910"
 } 
 
 ### Ler todos os Usuários
 GET http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
+
 
 ### Ler todos os Usuários que começam o nome eduardo (depois da interrogação temos a "query" ( chamado no controller por req.query))
 
@@ -33,12 +43,14 @@ Content-Type: application/json
 
 ### Delete um usuario pelo id
 
-DELETE http://localhost:3000/users/3 HTTP/1.1
+DELETE http://localhost:3000/users/1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {@token}
 
 ### Atualiza o usuario
 PUT http://localhost:3000/users/4 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {@token}
 
 {
     "name":"Eduardo",
