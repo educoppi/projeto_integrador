@@ -10,3 +10,8 @@ npx prisma db push --force-reset
 npx prisma studio
 
 
+
+
+
+npm install bcrypt express-session nodemailer uuid             (faz a criptografia da senha)
+npm install jsonwebtoken

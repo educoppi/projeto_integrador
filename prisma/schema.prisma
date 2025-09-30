@@ -48,6 +48,7 @@ enum Role {
   DOCTOR
   NURSE
   PHARMACY
+  PATIENT
 }
 
 //Eduardo Coppi
