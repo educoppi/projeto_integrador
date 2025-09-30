@@ -5,22 +5,28 @@ export const RecordController = {
     //c - CREATE,INSERT,POST,SET,STORE
     async store(req, res, next) {
         try {
-            const { patientId, appointmentDate, anotacao, userId} = req.body;
+            const { patientId, appointmentDate, anotacao} = req.body;
 
-            let p = await prisma.patient.findFirst({
+            let p = await prisma.user.findFirst({
                 where: { id: Number(patientId) }
             });
+
             if(!p){
                 res.status(301).json({ error: "Paciente não encontrado" })
                 return
             }
+
             if(p.role != "PATIENT"){
                 res.status(401).json({error: "Não é um paciente"})
             }
+
+
             
             let u = await prisma.user.findFirst({
-                where: { id: Number(userId) }
+                where: { id: req.usuario.id }
             });
+
+
             if(!u){
                 res.status(301).json({error: "Usuário não encontrado"})
                 return
@@ -34,7 +40,7 @@ export const RecordController = {
                     patientId: Number(patientId),
                     appointmentDate: new Date(appointmentDate),
                     anotacao:anotacao, 
-                    userId: Number(userId)
+                    userId: req.usuario.id
                 }
                     
             });

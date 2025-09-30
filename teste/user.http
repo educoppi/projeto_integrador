@@ -5,13 +5,13 @@ POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Fernando",
+    "name":"Rafael",
     "lastName":"Coppi",
     "password":"123456",
-    "cpf":"12345678910",
+    "cpf":"12345678918",
     "phone":"16994030052",
-    "email":"educoppi8@gmail.com",
-    "role":"PATIENT"
+    "email":"rafael@gmail.com",
+    "role":"DOCTOR"
 } 
 
 ### LOGIN
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
     "senha":"123456",
-    "cpf":"12345678910"
+    "cpf":"12345678918"
 } 
 
 ### Ler todos os Usuários

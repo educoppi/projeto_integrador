@@ -1,12 +1,14 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IlJhZmFlbCIsImlhdCI6MTc1OTI2MjY1OCwiZXhwIjoxNzU5MjkxNDU4fQ.XoSp9SifV7goy8sQ09KvPcNrGYvyiVB1_CBs7SFi6C8
+
 ### aqui criar um record
 POST http://localhost:3000/records HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "patientId":1,
     "appointmentDate":"2025-09-05",
-    "anotacao":"Paciente com dor de cabeça e febre a 3 dias e risco de trauma",
-    "userId":2
+    "anotacao":"Paciente com dor de cabeça e febre a 3 dias e risco de trauma"
 }
 
 ### aqui busca todos
