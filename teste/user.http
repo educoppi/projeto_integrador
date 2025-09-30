@@ -1,4 +1,4 @@
-@token = token
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTEwIiwibmFtZSI6IkZlcm5hbmRvIiwiaWF0IjoxNzU5MjU5NzAzLCJleHAiOjE3NTkyODg1MDN9.x5MXsDs40Z72iUjN-UJPPhprG5zt2N_MLsSqfqLiGg4
 
 ### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
 POST http://localhost:3000/users HTTP/1.1
@@ -52,7 +52,7 @@ Authorization: Bearer {{token}}
 ### Atualiza o usuario
 PUT http://localhost:3000/users/4 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {@token}
+Authorization: Bearer {{token}}
 
 {
     "name":"Eduardo",
