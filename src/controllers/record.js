@@ -21,6 +21,7 @@ export const RecordController = {
             let u = await prisma.user.findFirst({
                 where: { id: Number(userId) }
             });
+            
             if(!u){
                 res.status(301).json({error: "Usuário não encontrado"})
                 return

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 export function verificaToken(req, res, next) {
     const auth = req.headers.authorization || "";
-    const token = auth.startWith("Bearer ") ? auth.slice(7) : null;
+    const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
 
     if (!token) return res.status(401).json({ erro: "Token não enviado" });
 
@@ -17,6 +17,6 @@ export function verificaToken(req, res, next) {
         return next();
 
     } catch (e) {
-        return res.status(403).json({erro: "Token inválido ou expirado!"})
+        return res.status(403).json({erro: "Token inválido ou expirado!"});
     }
 }
