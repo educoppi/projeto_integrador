@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IkVkdWFyZG8iLCJpYXQiOjE3NTkzMzk0NTQsImV4cCI6MTc1OTM2ODI1NH0.M4JRXwFvrS5rsPzm_nMnEiGXClZef4YUkrSVSXuFNnk
+=======
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTEwIiwibmFtZSI6IkVkdWFyZG9vb28iLCJpYXQiOjE3NTkzNDI3MzAsImV4cCI6MTc1OTM3MTUzMH0.KG3f3j2evSQSiETBu48dtyoZ-tXyKrUB6qcQSzifiyk
+>>>>>>> 64742caeae4232d3d1e58a4af43fd1c7085d4d92
 
 ### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
 POST http://localhost:3000/users HTTP/1.1
@@ -20,7 +24,7 @@ Content-Type: application/json
 
 {
     "senha":"123456",
-    "cpf":"12345678918"
+    "cpf":"12345678910"
 } 
 
 ### Ler todos os Usuários
@@ -45,7 +49,7 @@ Content-Type: application/json
 
 ### Delete um usuario pelo id
 
-DELETE http://localhost:3000/users/1 HTTP/1.1
+DELETE http://localhost:3000/users/2 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
