@@ -5,7 +5,6 @@ import cors from 'cors';
 import medicationRoutes from './routes/medication.js';
 import movementRoutes from './routes/movement.js';
 import userRoutes from './routes/user.js';
-import patientRoutes from './routes/patient.js';
 import recordRoutes from './routes/record.js';
 import ExamRoutes from './routes/exam.js';
 import PrescriptionRoutes from './routes/prescription.js'
@@ -17,7 +16,6 @@ app.use(express.json()) // avisa que o app vai utilizar o protocolo JSON para a 
 app.use('/medications', medicationRoutes); // todas as rotas relacionadas a remédios vão utilizar essa rota
 app.use('/movements', movementRoutes);
 app.use('/users', userRoutes);
-app.use('/patients', patientRoutes);
 app.use('/records', recordRoutes);
 app.use('/exams', ExamRoutes);
 app.use('/prescriptions', PrescriptionRoutes)
