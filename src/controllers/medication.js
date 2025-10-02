@@ -8,7 +8,7 @@ export const MedicationController = {
     //assíncrono nome_da_função(recebendo, responder, próxima coisa a ser executada)
     async store(req, res, next) {
         try {
-            const { name, quantity, type, expiresAt } = req.body; //dentro das variáveis vão os itens da tabela, caso tenha camel case, precisa estar exatamente igual
+            const { name, quantity, dosage, type, expiresAt } = req.body; //dentro das variáveis vão os itens da tabela, caso tenha camel case, precisa estar exatamente igual
 
 
 
@@ -16,7 +16,7 @@ export const MedicationController = {
             const m = await prisma.medication.create({
                 data: {
                     name,
-                    dosage: Number(dosage),
+                    dosage,
                     quantity: Number(quantity),
                     type,
                     expiresAt
@@ -93,6 +93,7 @@ export const MedicationController = {
 
             if (req.body.name) update.name = req.body.name
             if (req.body.type) update.type = req.body.type
+            if (req.body.dosage) update.dosage = req.body.dosage
             if (req.body.quantity) update.quantity = Number(req.body.quantity)
             if (req.body.expiresAt) update.expiresAt = req.body.expiresAt
 

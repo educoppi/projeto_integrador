@@ -1,11 +1,18 @@
+// token medico 
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImNwZiI6IjEyMzQ1Njc4OTExIiwibmFtZSI6IkVkdWFyZG8iLCJpYXQiOjE3NTk0MjU0NzQsImV4cCI6MTc1OTQ1NDI3NH0.Z5Zo29ybC9-F8HgsTw3mNeEAkLMAf5mgejt22M5xyQw
+
+//token paciente
+# token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImNwZiI6IjEyMzQ1Njc4OTEyIiwibmFtZSI6IlJ5YW4iLCJpYXQiOjE3NTk0MjU4NDksImV4cCI6MTc1OTQ1NDY0OX0.FjULl-RTo7bMzbNc3anlBdLKmYMix_qMj3N2_-kCvcE
+
 ###
 POST http://localhost:3000/movements HTTP/1.1
 content-type: application/json 
+Authorization: Bearer {token}
 
 {
      "medicationId": 1,
-     "userId": 1,
-     "doctorId": 1,
+     "userId": 4,
+     "doctorId": 5,
      "quantity": 200,
      "date": "2025-09-04T19:51:38.868Z",
      "movementType": "OUTBOUND"

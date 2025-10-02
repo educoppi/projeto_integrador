@@ -9,13 +9,13 @@ POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Bruno",
-    "lastName":"Andi",
-    "password":"333666",
-    "cpf":"99999999999",
-    "phone":"19999999999",
-    "email":"bruno@gmail.com",
-    "role":"DOCTOR"
+    "name":"Ryan",
+    "lastName":"Dias",
+    "password":"",
+    "cpf":"12345678912",
+    "phone":"19888887777",
+    "email":"ryan@gmail.com",
+    "role":"PATIENT"
 } 
 
 ### LOGIN
@@ -23,8 +23,8 @@ POST http://localhost:3000/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "senha":"123456",
-    "cpf":"12345678910"
+    "senha":"",
+    "cpf":"12345678912"
 } 
 
 ### Ler todos os Usuários

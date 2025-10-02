@@ -113,7 +113,7 @@ model Medication {
   updatedAt DateTime @map("updated_at") @updatedAt
  
   name String
-  dosage Int
+  dosage String
   quantity Int
   type String
   expiresAt DateTime  @map("expires_at")
