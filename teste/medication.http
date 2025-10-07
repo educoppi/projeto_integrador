@@ -5,8 +5,9 @@ Content-Type: application/json
 // tudo que vem abaixo da rota é chamado de "header"
 
 {
-     "name": "Paracetamol",
-     "quantity": 500,
+     "name": "Dipirona",
+     "quantity": 150,
+     "dosage": "500mg",
      "type": "comprimidos",
      "expiresAt": "2025-09-04T19:51:38.868Z"
 }
@@ -64,11 +65,13 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/medications/2 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {token}
 
 
 ### Atualizar um medicamento pelo id
 PUT http://localhost:3000/medications/1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {token}
 
 {
      "name" : "Paracetamol",

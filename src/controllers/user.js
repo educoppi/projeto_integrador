@@ -51,13 +51,24 @@ export const UserController = {
             const ok = await bcrypt.compare(senha, u.password);
             if (!ok) return res.status(401).json({error: "Credenciais inválidas"})
 
+                console.log(u.role)
+
             const token = jwt.sign(
-                { sub: u.id, cpf: u.cpf, name: u.name },
+                { sub: u.id, cpf: u.cpf, name: u.name, role: u.role },
                 process.env.JWT_SECRET,
                 { expiresIn: '8h' }
             )
 
             return res.json({ token })
+
+        } catch (e){
+            next(e)
+        }
+    }, 
+    async logado(req, res, next){
+        try{
+
+            return res.json({id: req.usuario.id, name: req.usuario.name, role: req.usuario.role})
 
         } catch (e){
             next(e)

@@ -1,42 +1,53 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IkVkdWFyZG8iLCJpYXQiOjE3NTkzMzg4MDEsImV4cCI6MTc1OTM2NzYwMX0.xaLMQHBx1cv7b7Xd6MiqWOBKsK1t9JZ4AUhfoE_VxLs
+
+
 ### aqui criar um record
 POST http://localhost:3000/prescriptions HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "recordId": 1,
+    "recordId": 2,
     "medicationId":1,
     "quantity":10,
-    "observation": "aqui deve escrever uma observação"
+    "observation": "Paciente em estado vegetativel"
 }
 
 ### aqui busca todos
 GET http://localhost:3000/prescriptions HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### aqui busca recordId
 GET http://localhost:3000/prescriptions?recordId=1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### aqui busca medicationId
 GET http://localhost:3000/prescriptions?medicationId=1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### aqui busca maior que a quantity informada
 GET http://localhost:3000/prescriptions?quantity=1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 
 ### ler um id
 GET http://localhost:3000/prescriptions/1  HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### deleta um id
 DELETE  http://localhost:3000/prescriptions/4 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### atualizar uma quantity
 PUT   http://localhost:3000/prescriptions/5 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "quantity" : 30
