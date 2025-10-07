@@ -35,9 +35,13 @@ model User {
   createdAt DateTime  @map("created_at") @default(now())
   updatedAt DateTime @map("update_at") @updatedAt
 
-  records Record[]
+  recordsAsUser Record[] @relation("recordUser")
+  recordsAsDoctor Record[] @relation("recordDoctor")
+
   movementsAsUser   Movement[] @relation("MovementUser")
   movementsAsDoctor Movement[] @relation("MovementDoctor")
+
+  
   
   @@map("users")
 }
@@ -51,26 +55,6 @@ enum Role {
   PATIENT
 }
 
-//Eduardo Coppi
-model Patient {
-  id Int @id @default( autoincrement() )
-  name String
-  lastName String @map("last_name")
-  birth DateTime
-  cpf String @unique
-  email String @unique
-  phone String
-  address String
-  allergyDescription String @map("allergy_description")
-
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
-
-  records Record[] 
-  
-  @@map("patients")
-}
-
 //Eduardo Lombardo
 model Record {
   id Int @id @default( autoincrement() )
@@ -81,8 +65,8 @@ model Record {
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
-  patient Patient @relation(fields: [patientId], references: [id])
+  user User @relation("recordUser", fields: [userId], references: [id])
+  patient User @relation("recordDoctor", fields: [patientId], references: [id])
 
   exam Exam?
   prescription Prescription?

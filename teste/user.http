@@ -1,17 +1,17 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTEwIiwibmFtZSI6IkZlcm5hbmRvIiwiaWF0IjoxNzU5MjU5NzAzLCJleHAiOjE3NTkyODg1MDN9.x5MXsDs40Z72iUjN-UJPPhprG5zt2N_MLsSqfqLiGg4
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IlJhZmFlbCIsImlhdCI6MTc1OTM0MTEyNiwiZXhwIjoxNzU5MzY5OTI2fQ.wgiH6WbN4PgS_HXv0BK_fQE6bjfZsp3jfyB-b0lYSUw
 
 ### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Rafael",
+    "name":"JoãoZINHO",
     "lastName":"Coppi",
     "password":"123456",
-    "cpf":"12345678918",
+    "cpf":"12345678915",
     "phone":"16994030052",
-    "email":"rafael@gmail.com",
-    "role":"DOCTOR"
+    "email":"joaozinho@gmail.com",
+    "role":"PATIENT"
 } 
 
 ### LOGIN
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ### Delete um usuario pelo id
 
-DELETE http://localhost:3000/users/1 HTTP/1.1
+DELETE http://localhost:3000/users/2 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

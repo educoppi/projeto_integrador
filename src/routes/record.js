@@ -5,8 +5,8 @@ import { verificaToken } from '../middlewares/auth.js';
 const route = Router();
 
 route.post('/', verificaToken, RecordController.store);
-route.get('/:id', RecordController.show);//<> para buscar um item em vez da lista toda 
-route.get('/', RecordController.index);
+route.get('/:id',verificaToken, RecordController.show);//<> para buscar um item em vez da lista toda 
+route.get('/',verificaToken, RecordController.index);
 route.delete('/:id', verificaToken, RecordController.del);
 route.put('/:id', verificaToken, RecordController.update);
 
