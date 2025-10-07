@@ -9,10 +9,13 @@ export function verificaToken(req, res, next) {
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
 
+        console.log(payload.role)
+
         req.usuario = {
             id: payload.sub,
             cpf: payload.cpf,
-            name: payload.name
+            name: payload.name,
+            role: payload.role
         }
         return next();
 

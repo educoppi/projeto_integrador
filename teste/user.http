@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IkVkdWFyZG8iLCJpYXQiOjE3NTkzMzk0NTQsImV4cCI6MTc1OTM2ODI1NH0.M4JRXwFvrS5rsPzm_nMnEiGXClZef4YUkrSVSXuFNnk
-=======
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTEwIiwibmFtZSI6IkVkdWFyZG9vb28iLCJpYXQiOjE3NTkzNDI3MzAsImV4cCI6MTc1OTM3MTUzMH0.KG3f3j2evSQSiETBu48dtyoZ-tXyKrUB6qcQSzifiyk
->>>>>>> 64742caeae4232d3d1e58a4af43fd1c7085d4d92
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImNwZiI6IjEyMzQ1Njc4OTExIiwibmFtZSI6IkVkdWFyZG8iLCJyb2xlIjoiRE9DVE9SIiwiaWF0IjoxNzU5NzczMDUxLCJleHAiOjE3NTk4MDE4NTF9.UKyhP20ltwd9K86UMgFsL1iWGND8_Jbe6FC3qfLk9po
 
 ### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
 POST http://localhost:3000/users HTTP/1.1
@@ -18,13 +14,13 @@ Content-Type: application/json
     "role":"PATIENT"
 } 
 
-### LOGIN
+### LOGIN (eduardo doctor)
 POST http://localhost:3000/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "senha":"",
-    "cpf":"12345678912"
+    "senha":"123456",
+    "cpf":"12345678911"
 } 
 
 ### Ler todos os Usuários
@@ -61,3 +57,8 @@ Authorization: Bearer {{token}}
 {
     "name":"Eduardo"
 }
+
+### Ler usuario atraves do login
+GET http://localhost:3000/users/logado HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
