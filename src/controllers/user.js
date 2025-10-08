@@ -38,9 +38,16 @@ export const UserController = {
         try{
             const { cpf, senha } = req.body;
 
-            let u = await prisma.user.findFirst({
-                where: { cpf: cpf}
-            })
+            const u = await prisma.user.findFirst({
+                where: { cpf: cpf },
+                include: {
+                  group: {
+                    include: {
+                      group: true
+                    }
+                  }
+                }
+              });
 
             if(!u){
                 res.status(404).json({error: "Usuário não encontrado"});
@@ -50,10 +57,12 @@ export const UserController = {
             const ok = await bcrypt.compare(senha, u.password);
             if (!ok) return res.status(401).json({error: "Credenciais inválidas"})
 
-                console.log(u.role)
+            const groupNames = u.group.map(g => g.group.name);
+
+            console.log(groupNames)
 
             const token = jwt.sign(
-                { sub: u.id, cpf: u.cpf, name: u.name, role: u.role },
+                { sub: u.id, cpf: u.cpf, name: u.name, group: groupNames },
                 process.env.JWT_SECRET,
                 { expiresIn: '120d' }
             )

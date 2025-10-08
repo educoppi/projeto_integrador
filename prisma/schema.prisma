@@ -31,7 +31,6 @@ model User {
   phone String
   email String @unique
  
- 
   createdAt DateTime  @map("created_at") @default(now())
   updatedAt DateTime @map("update_at") @updatedAt
  
@@ -43,7 +42,6 @@ model User {
 
   group GroupUser[]
  
-  
   @@map("users")
 }
 model Role{

@@ -160,12 +160,12 @@ async function main() {
 
 
 
-    await connectUserToGroup({ userId: 1, groupId: groups['ADMIN'].id });
-    await connectUserToGroup({ userId: 2, groupId: groups['PHARMACY'].id });
-    await connectUserToGroup({ userId: 3, groupId: groups['PATIENT'].id });
-    await connectUserToGroup({ userId: 4, groupId: groups['RECEPCIONIST'].id });
-    await connectUserToGroup({ userId: 5, groupId: groups['DOCTOR'].id });
-    await connectUserToGroup({ userId: 6, groupId: groups['NURSE'].id });
+    await connectUserToGroup({ userId: 1, groupId: groups['RECEPCIONIST'].id });
+    await connectUserToGroup({ userId: 2, groupId: groups['DOCTOR'].id });
+    await connectUserToGroup({ userId: 3, groupId: groups['PHARMACY'].id });
+    await connectUserToGroup({ userId: 4, groupId: groups['PATIENT'].id });
+    await connectUserToGroup({ userId: 5, groupId: groups['NURSE'].id });
+    await connectUserToGroup({ userId: 6, groupId: groups['ADMIN'].id });
   } catch {}
 
   console.log('Seed concluído com Roles, Groups, RoleGroup e GroupUser');
