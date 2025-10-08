@@ -23,8 +23,7 @@ export const UserController = {
                         password: hash,
                         cpf,
                         phone,
-                        email,
-                        role
+                        email
                     }
                 }
             );
@@ -56,7 +55,7 @@ export const UserController = {
             const token = jwt.sign(
                 { sub: u.id, cpf: u.cpf, name: u.name, role: u.role },
                 process.env.JWT_SECRET,
-                { expiresIn: '8h' }
+                { expiresIn: '120d' }
             )
 
             return res.json({ token })

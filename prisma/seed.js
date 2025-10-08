@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 // prisma/seed.js
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
@@ -49,11 +51,32 @@ async function connectUserToGroup({ userId, groupId }) {
 async function main() {
   // 1) Cria Roles
   const rolesData = [
-    { name: 'ADMIN',   description: 'Acesso total ao sistema'},
-    { name: 'EDITOR',  description: 'Pode criar/editar conteúdos'},
-    { name: 'VIEWER',  description: 'Somente leitura'},
-    { name: 'OWNER',   description: 'Responsável pelo grupo/projeto' },
-    { name: 'deleteHabit',   description: 'Pode deletar um hábito' }
+
+    // MEDICACAO
+    { name: 'CREATEMEDICATION', description: 'Cria remédios' },
+    { name: 'GETMEDICATION', description: 'Lista remédios' },
+    { name: 'UPDATEMEDICATION', description: 'Atualiza remédios' },
+    { name: 'MOVEMENTMEDICATION', description: 'Movimenta remédios' },
+
+    // RECEITAS
+    { name: 'CREATEPRESCRIPTION', description: 'Cria Receitas' },
+    { name: 'GETPRESCRIPTION', description: 'Lista receitas' },
+    { name: 'UPDATEPRESCRIPTION', description: 'Atualiza' },
+
+    //EXAMES
+    { name: 'CREATEEXAM', description: 'Cria encaminhamentos' },
+    { name: 'GETEXAM', description: 'Lista encaminhamentos' },
+    { name: 'UPDATEEXAM', description: 'Atualiza encaminhamentos' },
+
+    //USUARIOS
+    { name: 'CREATEUSER', description: 'Cria Usuário' },
+    { name: 'GETUSER', description: 'Lista Usuário' },
+    { name: 'UPDATEUSER', description: 'Atualiza Usuário' },
+
+    //HISTORICO
+    { name: 'CREATERECORD', description: 'Cria Histórico' },
+    { name: 'GETRECORD', description: 'Lista Histórico' },
+    { name: 'UPDATERECORD', description: 'Atualiza Histórico' }
   ];
 
   const roles = {};
@@ -64,9 +87,12 @@ async function main() {
 
   // 2) Cria Groups
   const groupsData = [
-    { name: 'Docentes',        description: 'Professores' },
-    { name: 'Lider de projetos',description: 'Membro do grupo que tem mais facilidade' },
-    { name: 'Estudantes',description: 'Squad do projeto' }
+    { name: 'RECEPCIONIST', description: 'Recepcionista' },
+    { name: 'DOCTOR',description: 'Doutor' },
+    { name: 'PHARMACY',description: 'Farmacêutico' },
+    { name: 'PATIENT',description: 'Paciente' },
+    { name: 'NURSE',description: 'Enfermagem' },
+    { name: 'ADMIN',description: 'Administrador' }
   ];
 
   const groups = {};
@@ -78,21 +104,68 @@ async function main() {
   // 3) Vincula Roles aos Groups
   // Crie um nome para a unique composta no schema para permitir upsert,
   // ex: @@unique([groupId, roleId], name: "group_role_unique")
-  await connectRoleToGroup({ groupId: groups['Docentes'].id,        roleId: roles.ADMIN.id });
-  await connectRoleToGroup({ groupId: groups['Docentes'].id,        roleId: roles.EDITOR.id });
-  await connectRoleToGroup({ groupId: groups['Docentes'].id,        roleId: roles.VIEWER.id });
-  await connectRoleToGroup({ groupId: groups['Docentes'].id,        roleId: roles.deleteHabit.id });
+  await connectRoleToGroup({ groupId: groups['ADMIN'].id, roleId: roles.GETUSER.id });
+  await connectRoleToGroup({ groupId: groups['ADMIN'].id, roleId: roles.CREATEUSER.id });
+  await connectRoleToGroup({ groupId: groups['ADMIN'].id, roleId: roles.UPDATEUSER.id });
 
-  await connectRoleToGroup({ groupId: groups['Lider de projetos'].id, roleId: roles.OWNER.id });
-  await connectRoleToGroup({ groupId: groups['Lider de projetos'].id, roleId: roles.EDITOR.id });
-  await connectRoleToGroup({ groupId: groups['Lider de projetos'].id, roleId: roles.VIEWER.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.GETMEDICATION.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.CREATEPRESCRIPTION.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.GETPRESCRIPTION.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.UPDATEPRESCRIPTION.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.CREATEEXAM.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.GETEXAM.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.UPDATEEXAM.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.GETUSER.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.UPDATEUSER.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.CREATERECORD.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.GETRECORD.id });
+  await connectRoleToGroup({ groupId: groups['DOCTOR'].id, roleId: roles.UPDATERECORD.id });
 
-  await connectRoleToGroup({ groupId: groups['Estudantes'].id, roleId: roles.VIEWER.id });
+  await connectRoleToGroup({ groupId: groups['PHARMACY'].id, roleId: roles.CREATEMEDICATION.id });
+  await connectRoleToGroup({ groupId: groups['PHARMACY'].id, roleId: roles.GETMEDICATION.id });
+  await connectRoleToGroup({ groupId: groups['PHARMACY'].id, roleId: roles.UPDATEMEDICATION.id });
+  await connectRoleToGroup({ groupId: groups['PHARMACY'].id, roleId: roles.MOVEMENTMEDICATION.id });
+
+  await connectRoleToGroup({ groupId: groups['RECEPCIONIST'].id, roleId: roles.CREATEUSER.id });
+  await connectRoleToGroup({ groupId: groups['RECEPCIONIST'].id, roleId: roles.GETUSER.id });
+  await connectRoleToGroup({ groupId: groups['RECEPCIONIST'].id, roleId: roles.UPDATEUSER.id });
+
+
+  await connectRoleToGroup({ groupId: groups['NURSE'].id, roleId: roles.UPDATEUSER.id });
+  await connectRoleToGroup({ groupId: groups['NURSE'].id, roleId: roles.UPDATERECORD.id });
 
   // 4) (Opcional) Vincula Users a Groups
   // Se já existir User com id 1 e 2, por exemplo:
   try {
-    await connectUserToGroup({ userId: 1, groupId: groups['Docentes'].id });
+
+    let cpf = 1;
+    for (const group of groupsData) {
+      const hash = await bcrypt.hash("123456", 10);
+
+      const user = await prisma.user.create(
+          {
+              data: {
+                  name: group.name,
+                  lastName: "sobrenome",
+                  password: hash,
+                  cpf: "123467890" + cpf.toString(),
+                  phone: "19888887777",
+                  email: group.name + "@gmail.com"
+              }
+          }
+      );
+
+      cpf++;
+    }
+
+
+
+    await connectUserToGroup({ userId: 1, groupId: groups['ADMIN'].id });
+    await connectUserToGroup({ userId: 2, groupId: groups['PHARMACY'].id });
+    await connectUserToGroup({ userId: 3, groupId: groups['PATIENT'].id });
+    await connectUserToGroup({ userId: 4, groupId: groups['RECEPCIONIST'].id });
+    await connectUserToGroup({ userId: 5, groupId: groups['DOCTOR'].id });
+    await connectUserToGroup({ userId: 6, groupId: groups['NURSE'].id });
   } catch {}
 
   console.log('Seed concluído com Roles, Groups, RoleGroup e GroupUser');

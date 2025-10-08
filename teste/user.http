@@ -1,20 +1,84 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IlJhZmFlbCIsImlhdCI6MTc1OTM0MTEyNiwiZXhwIjoxNzU5MzY5OTI2fQ.wgiH6WbN4PgS_HXv0BK_fQE6bjfZsp3jfyB-b0lYSUw
 
-### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
+### Criando o usuario administrador
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"Ryan",
-    "lastName":"Dias",
-    "password":"",
-    "cpf":"12345678912",
+    "name":"Eduardo",
+    "lastName":"Coppi",
+    "password":"123456",
+    "cpf":"12345678906",
     "phone":"19888887777",
-    "email":"ryan@gmail.com",
-    "role":"PATIENT"
+    "email":"eduardo.coppi@gmail.com"
 } 
 
-### LOGIN (eduardo doctor)
+### Criando o usuario farmaceutico
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Rafael",
+    "lastName":"Sedai",
+    "password":"123456",
+    "cpf":"12345678901",
+    "phone":"19888887777",
+    "email":"rafael@gmail.com"
+} 
+
+### Criando o usuario paciente 
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Sara",
+    "lastName":"Malavazi",
+    "password":"123456",
+    "cpf":"12345678902",
+    "phone":"19888887777",
+    "email":"sara@gmail.com"
+} 
+
+### Criando o usuario recepcionista
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Conrado",
+    "lastName":"Saud",
+    "password":"123456",
+    "cpf":"12345678903",
+    "phone":"19888887777",
+    "email":"conrado.saud@gmail.com"
+} 
+
+### Criando o usuario doutor
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Eduardo",
+    "lastName":"Lombardo",
+    "password":"123456",
+    "cpf":"12345678904",
+    "phone":"19888887777",
+    "email":"eduardo.lombardo@gmail.com"
+}
+
+### Criando o usuario enfermagem
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Eldes",
+    "lastName":"Oliveira",
+    "password":"123456",
+    "cpf":"12345678905",
+    "phone":"19888887777",
+    "email":"eldes.oliveira@gmail.com"
+} 
+
+### LOGIN (MUDE A SENHA E O CPF)
 POST http://localhost:3000/users/login HTTP/1.1
 Content-Type: application/json
 
@@ -26,7 +90,6 @@ Content-Type: application/json
 ### Ler todos os Usuários
 GET http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
-
 
 ### Ler todos os Usuários que começam o nome eduardo (depois da interrogação temos a "query" ( chamado no controller por req.query))
 
