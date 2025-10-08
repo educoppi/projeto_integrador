@@ -5,6 +5,8 @@ npx prisma generate
 
 npx prisma migrate dev --name init
 
+npx prisma migrate dev --name nome_atualizaçao
+
 npx prisma db push --force-reset
 
 npx prisma studio

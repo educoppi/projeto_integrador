@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImNwZiI6IjEyMzQ1Njc4OTExIiwibmFtZSI6IkVkdWFyZG8iLCJyb2xlIjoiRE9DVE9SIiwiaWF0IjoxNzU5NzczMDUxLCJleHAiOjE3NTk4MDE4NTF9.UKyhP20ltwd9K86UMgFsL1iWGND8_Jbe6FC3qfLk9po
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IlJhZmFlbCIsImlhdCI6MTc1OTM0MTEyNiwiZXhwIjoxNzU5MzY5OTI2fQ.wgiH6WbN4PgS_HXv0BK_fQE6bjfZsp3jfyB-b0lYSUw
 
 ### Criando um usuário o que esta dentro de chaves é um body ( chamado pelo controller por req.body)
 POST http://localhost:3000/users HTTP/1.1
