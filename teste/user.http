@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ1Njc4OTE4IiwibmFtZSI6IlJhZmFlbCIsImlhdCI6MTc1OTM0MTEyNiwiZXhwIjoxNzU5MzY5OTI2fQ.wgiH6WbN4PgS_HXv0BK_fQE6bjfZsp3jfyB-b0lYSUw
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ2Nzg5MDEiLCJuYW1lIjoiUkVDRVBDSU9OSVNUIiwiZ3JvdXAiOlsiUkVDRVBDSU9OSVNUIl0sImlhdCI6MTc2MDAyOTI0NCwiZXhwIjoxNzcwMzk3MjQ0fQ.nOFXSgYIiO2zwJ3vdHxd1j_JlejyvW77tlrGQtD-B4Y
 
 ### Criando o usuario administrador
 POST http://localhost:3000/users HTTP/1.1
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
     "senha":"123456",
-    "cpf":"1234678902"
+    "cpf":"1234678901"
 } 
 
 ### Ler todos os Usuários

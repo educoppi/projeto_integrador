@@ -7,7 +7,7 @@ export const UserController = {
 
     async store(req, res, next) {
         try {
-            const { name, lastName, password, cpf, phone, email, role } = req.body;
+            const { name, lastName, password, cpf, phone, email, group } = req.body;
 
             // if(!validaCPF(cpf)) {
             //         res.status(401).json('erro': 'CPF inválido')
@@ -23,7 +23,8 @@ export const UserController = {
                         password: hash,
                         cpf,
                         phone,
-                        email
+                        email,
+                        group: group
                     }
                 }
             );
@@ -76,7 +77,7 @@ export const UserController = {
     async logado(req, res, next){
         try{
 
-            return res.json({id: req.usuario.id, name: req.usuario.name, role: req.usuario.role})
+            return res.json({id: req.usuario.id, name: req.usuario.name, role: req.usuario.group})
 
         } catch (e){
             next(e)

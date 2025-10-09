@@ -7,7 +7,7 @@ const route = Router();
 
 route.post('/', UserController.store);
 route.post('/login', UserController.login);
-route.get('/logado', verificaRole, verificaToken, UserController.logado);
+route.get('/logado', verificaToken, UserController.logado);
 route.get('/', UserController.index);
 route.get('/:id', verificaToken, UserController.show); // ":id" é o nome do parametro (req.params.id). ".show" é o novo metodo criado no controller
 route.delete('/:id', verificaToken, UserController.delete);
