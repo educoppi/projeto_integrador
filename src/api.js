@@ -8,13 +8,14 @@ import userRoutes from './routes/user.js';
 import recordRoutes from './routes/record.js';
 import ExamRoutes from './routes/exam.js';
 import PrescriptionRoutes from './routes/prescription.js'
+import { verificaToken } from './middlewares/auth.js';
 
 const app = express(); // cria o app usando express
 app.use(cors()); // avisa que o app vai usar o cors (usado para saber quem pode chamar a api)
 app.use(express.json()) // avisa que o app vai utilizar o protocolo JSON para a comunicação
 
-app.use('/medications', medicationRoutes); // todas as rotas relacionadas a remédios vão utilizar essa rota
-app.use('/movements', movementRoutes);
+app.use('/medications', verificaToken, medicationRoutes); // todas as rotas relacionadas a remédios vão utilizar essa rota
+app.use('/movements', verificaToken, movementRoutes);
 app.use('/users', userRoutes);
 app.use('/records', recordRoutes);
 app.use('/exams', ExamRoutes);
