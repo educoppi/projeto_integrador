@@ -1,19 +1,33 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ2Nzg5MDEiLCJuYW1lIjoiUkVDRVBDSU9OSVNUIiwiZ3JvdXAiOlsiUkVDRVBDSU9OSVNUIl0sImlhdCI6MTc2MDAyOTI0NCwiZXhwIjoxNzcwMzk3MjQ0fQ.nOFXSgYIiO2zwJ3vdHxd1j_JlejyvW77tlrGQtD-B4Y
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ2Nzg5MDEiLCJuYW1lIjoiUkVDRVBDSU9OSVNUIiwiZ3JvdXAiOlsiUkVDRVBDSU9OSVNUIl0sImlhdCI6MTc2MDM4MjcyNywiZXhwIjoxNzcwNzUwNzI3fQ.QQ-wdVcT8pgk6L-u2vBp0Bu2JFA0cqdKHvSMVC0Q1Wk
 
 ### Criando o usuario administrador
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "name":"Eduardo",
     "lastName":"Coppi",
     "password":"123456",
-    "cpf":"12345678906",
+    "cpf":"12345678909",
     "phone":"19888887777",
     "email":"eduardo.coppi@gmail.com",
     "group": {
         "connect": [{ "groupId": 1}]
     }
+}
+
+### Criando um paciente
+POST http://localhost:3000/users/patient HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name":"Eduardo",
+    "lastName":"Coppi",
+    "cpf":"12345678909",
+    "phone":"19888887777",
+    "email":"eduardo.coppi@gmail.com"
 }
 
 ### LOGIN (MUDE A SENHA E O CPF)
@@ -41,8 +55,9 @@ Content-Type: application/json
 
 ### Ler um usuario pelo id (depois da ultima barra temos um "params" ( chamado no controller por req.params))
 
-GET http://localhost:3000/users/1 HTTP/1.1
+GET http://localhost:3000/users/7 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Delete um usuario pelo id
 

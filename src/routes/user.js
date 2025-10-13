@@ -5,7 +5,8 @@ import { verificaRole } from '../middlewares/roles.js';
 
 const route = Router();
 
-route.post('/', UserController.store);
+route.post('/', verificaToken, UserController.store);
+route.post('/patient', verificaToken, UserController.storePatient);
 route.post('/login', UserController.login);
 route.get('/logado', verificaToken, UserController.logado);
 route.get('/', UserController.index);
