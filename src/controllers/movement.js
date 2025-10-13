@@ -4,12 +4,12 @@ export const MovementController = {
 
   async store(req, res, next) {
     try {
-      const { medicationId, userId, doctorId, date, quantity, movementType } = req.body;
+      const { medicationId, doctorId, date, quantity, movementType } = req.body;
 
       const movement = await prisma.movement.create({
         data: {
           medicationId: Number(medicationId),
-          userId: Number(userId),
+          userId: Number(req.usuario.id),
           doctorId: doctorId ? Number(doctorId) : null,
           quantity: Number(quantity),
           date,
