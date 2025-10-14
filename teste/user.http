@@ -47,11 +47,14 @@ Content-Type: application/json
 
 GET http://localhost:3000/users?name=Eduardo HTTP/1.1 
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 ### Ler todos os Usuários que começam o cpf
 
 GET http://localhost:3000/users?cpf=12345678910 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Ler um usuario pelo id (depois da ultima barra temos um "params" ( chamado no controller por req.params))
 
