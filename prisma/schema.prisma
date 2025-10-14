@@ -30,6 +30,8 @@ model User {
   cpf String @unique
   phone String
   email String @unique
+  allergy String?
+  birthDate DateTime @map("birth_date")
  
   createdAt DateTime  @map("created_at") @default(now())
   updatedAt DateTime @map("update_at") @updatedAt
@@ -86,16 +88,16 @@ model RoleGroup{
   @@unique([groupId, roleId ], name: "groupId_roleId")
 }
 
- 
- 
-
 //Eduardo Lombardo
 model Record {
   id Int @id @default( autoincrement() )
   userId Int @map("user_id")
   patientId Int @map("patient_id")
   appointmentDate DateTime @map("appointment_date")
-  anotacao String
+  level Int?
+  symptom String?
+  recentMedicine String? @map("recent_medicine")
+  annotation String?
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
  
