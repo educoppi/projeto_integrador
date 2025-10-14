@@ -11,6 +11,11 @@ export const RecordController = {
                 where: { id: Number(patientId) }
             });
 
+            if(!p){
+                res.status(301).json({ error: "Paciente não encontrado" })
+                return
+            }
+
             let u = await prisma.user.findFirst({
                 where: { id: req.usuario.id }
             });
@@ -18,10 +23,6 @@ export const RecordController = {
             if(!u){
                 res.status(301).json({error: "Usuário não encontrado"})
                 return
-            }
-            
-            if(u.role == "PATIENT"){
-                res.status(401).json({error: "Usuário não pode ser igual a um paciente"})
             }
             
             const r = await prisma.record.create({
