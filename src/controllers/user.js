@@ -35,6 +35,32 @@ export const UserController = {
             next(err);
         }
     },
+    async storePatient(req, res, next){
+        try {
+            const { name, lastName, cpf, phone, email } = req.body;
+            
+            const u = await prisma.user.create(
+                {
+                    data: {
+                        name,
+                        lastName,
+                        cpf,
+                        phone,
+                        email,
+                        group: {
+                            connect: [{ id: 4 }]
+                        }
+                    }
+                }
+            );
+            
+
+            res.status(201).json(u);
+
+        } catch (err) {
+            next(err);
+        }
+    },
     async login(req, res, next){
         try{
             const { cpf, senha } = req.body;
@@ -92,7 +118,14 @@ export const UserController = {
         if (req.query.cpf) query = {cpf: req.query.cpf}
 
         const users = await prisma.user.findMany({
-            where: query
+            where: query,
+            include: {
+                group: {
+                  include: {
+                    group: true
+                  }
+                }
+            }
         })
 
         res.status(200).json(users)
@@ -103,7 +136,14 @@ export const UserController = {
 
         // funções assincronas precisam do await
         const u = await prisma.user.findFirstOrThrow({
-            where: { id }
+            where: { id },
+            include: {
+                group: {
+                  include: {
+                    group: true
+                  }
+                }
+            }
         }); //função para encontrar o primeiro user com a id especificada, se não encontrar retorna um erro
 
         res.status(200).json(u);

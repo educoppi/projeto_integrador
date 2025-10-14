@@ -150,7 +150,9 @@ async function main() {
                   password: hash,
                   cpf: "123467890" + cpf.toString(),
                   phone: "19888887777",
-                  email: group.name + "@gmail.com"
+                  email: group.name + "@gmail.com",
+                  allergy: "nenhuma",
+                  birthDate: "2025-09-04T19:51:38.868Z"
               }
           }
       );
