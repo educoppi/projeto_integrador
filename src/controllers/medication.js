@@ -39,6 +39,8 @@ export const MedicationController = {
 
         if (req.query.type) query.type = req.query.type
 
+        if (req.query.dosage) query.dosage = req.query.dosage
+
         if (req.query.quantity) query.quantity = Number(req.query.quantity)
 
         if (req.query.min) query.quantity = { lt: Number(req.query.min) }
