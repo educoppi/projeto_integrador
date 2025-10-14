@@ -37,7 +37,7 @@ export const UserController = {
     },
     async storePatient(req, res, next){
         try {
-            const { name, lastName, cpf, phone, email } = req.body;
+            const { name, lastName, cpf, phone, email, allergy, birthDate } = req.body;
             
             const u = await prisma.user.create(
                 {
@@ -49,7 +49,10 @@ export const UserController = {
                         email,
                         group: {
                             connect: [{ id: 4 }]
-                        }
+                        },
+                        allergy: allergy,
+                        birthDate: birthDate
+
                     }
                 }
             );
