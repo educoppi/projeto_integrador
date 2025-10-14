@@ -27,7 +27,9 @@ Authorization: Bearer {{token}}
     "lastName":"Coppi",
     "cpf":"12345678909",
     "phone":"19888887777",
-    "email":"eduardo.coppi@gmail.com"
+    "email":"eduardo.coppi@gmail.com",
+    "allergy":"Nenhuma",
+    "birthDate":"2025-09-04T19:51:38.868Z"
 }
 
 ### LOGIN (MUDE A SENHA E O CPF)
