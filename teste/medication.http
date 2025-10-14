@@ -18,50 +18,65 @@ Authorization: Bearer {{token}}
 
 GET http://localhost:3000/medications HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 //GET não envia nada para o banco de dados, portanto não possui body
 // a ? depois do get é uma query, que precisa de uma chave e um valor que deseja ser buscado. ex: users?name=rafael&cpf=12345678910
 
 ### Filtrar um medicamento por nome
 
-GET http://localhost:3000/medications?name=Paracetamol HTTP/1.1
+GET http://localhost:3000/medications?name=paracetamol HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Filtrar um medicamento por tipo
 
 GET http://localhost:3000/medications?type=comprimido HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Filtrar um medicamento por quantidade
 
 GET http://localhost:3000/medications?quantity=500 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 
 ### Filtrar um medicamento por quantidade MAIOR QUE
 
 GET http://localhost:3000/medications?max=500 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Filtrar um medicamento por quantidade MAIOR OU IGUAL QUE
 
 GET http://localhost:3000/medications?maxig=500 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Filtrar um medicamento por quantidade MENOR QUE
 
 GET http://localhost:3000/medications?min=1000 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Filtrar um medicamento por quantidade MENOR OU IGUAL QUE
 
 GET http://localhost:3000/medications?minig=1000 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Ler um medicamento pelo id (depois da ultima barra temos um "params" ( chamado no controller por req.params))
 
 GET http://localhost:3000/medications/1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###Ler um medicamento pela dosagem
+GET http://localhost:3000/medications?dosage=500mg HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 ### Delete um medicamento pelo id
 
