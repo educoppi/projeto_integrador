@@ -5,7 +5,7 @@ export const RecordController = {
     //c - CREATE,INSERT,POST,SET,STORE
     async store(req, res, next) {
         try {
-            const { patientId, appointmentDate, annotation, level, symptom, recentMedicine} = req.body;
+            const { patientId, appointmentDate, level, symptom, recentMedicine} = req.body;
 
             let p = await prisma.user.findFirst({
                 where: { id: Number(patientId) }
@@ -29,7 +29,6 @@ export const RecordController = {
                 data: {
                     patientId: Number(patientId),
                     appointmentDate: new Date(appointmentDate),
-                    annotation: annotation, 
                     userId: req.usuario.id,
                     level: Number(level),
                     symptom: symptom,

@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImNwZiI6IjEyMzQ2Nzg5MDIiLCJuYW1lIjoiRE9DVE9SIiwiZ3JvdXAiOlsiRE9DVE9SIl0sImlhdCI6MTc2MDQ2NTg3NywiZXhwIjoxNzcwODMzODc3fQ.0bGOWChX1VWe-mBUMvQ6Q5xC3jmZZtBBD55PzAfJZ30
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImNwZiI6IjEyMzQ2Nzg5MDUiLCJuYW1lIjoiTlVSU0UiLCJncm91cCI6WyJOVVJTRSJdLCJpYXQiOjE3NjA2MzI3ODUsImV4cCI6MTc3MTAwMDc4NX0.qXDj91s3H2ycWBuArAAtkA5t2vkPwgy7Jw6_VGTfeVY
 ### aqui criar um record
 
 POST http://localhost:3000/records HTTP/1.1
@@ -9,7 +8,6 @@ Authorization: Bearer {{token}}
 {
     "patientId":7,
     "appointmentDate":"2025-09-15",
-    "annotation":"q",
     "level":5,
     "symptom":"dor na cabeça", 
     "recentMedicine":"Dipirona" 
