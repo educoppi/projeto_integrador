@@ -10,7 +10,7 @@ export const MedicationController = {
         try {
             const { name, quantity, dosage, type, expiresAt } = req.body; //dentro das variáveis vão os itens da tabela, caso tenha camel case, precisa estar exatamente igual
 
-
+                // validações
 
             //nome da const é primeira letra do modelo 
             const m = await prisma.medication.create({
