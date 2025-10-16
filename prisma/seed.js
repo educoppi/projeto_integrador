@@ -130,7 +130,6 @@ async function main() {
   await connectRoleToGroup({ groupId: groups['RECEPCIONIST'].id, roleId: roles.GETUSER.id });
   await connectRoleToGroup({ groupId: groups['RECEPCIONIST'].id, roleId: roles.UPDATEUSER.id });
 
-
   await connectRoleToGroup({ groupId: groups['NURSE'].id, roleId: roles.UPDATEUSER.id });
   await connectRoleToGroup({ groupId: groups['NURSE'].id, roleId: roles.UPDATERECORD.id });
 

@@ -38,7 +38,7 @@ Content-Type: application/json
 
 {
     "senha":"123456",
-    "cpf":"1234678903"
+    "cpf":"1234678902"
 } 
 
 ### Ler todos os Usuários

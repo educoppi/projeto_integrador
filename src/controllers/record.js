@@ -5,7 +5,7 @@ export const RecordController = {
     //c - CREATE,INSERT,POST,SET,STORE
     async store(req, res, next) {
         try {
-            const { patientId, appointmentDate, anotacao} = req.body;
+            const { patientId, appointmentDate, annotation, level, symptom, recentMedicine} = req.body;
 
             let p = await prisma.user.findFirst({
                 where: { id: Number(patientId) }
@@ -16,37 +16,32 @@ export const RecordController = {
                 return
             }
 
-            if(p.role != "PATIENT"){
-                res.status(401).json({error: "Não é um paciente"})
-            }
-
             let u = await prisma.user.findFirst({
                 where: { id: req.usuario.id }
             });
             
-            
             if(!u){
                 res.status(301).json({error: "Usuário não encontrado"})
                 return
-            }
-            if(u.role == "PATIENT"){
-                res.status(401).json({error: "Usuário não pode ser igual a um paciente"})
             }
             
             const r = await prisma.record.create({
                 data: {
                     patientId: Number(patientId),
                     appointmentDate: new Date(appointmentDate),
-                    anotacao:anotacao, 
-                    userId: req.usuario.id
+                    annotation: annotation, 
+                    userId: req.usuario.id,
+                    level: Number(level),
+                    symptom: symptom,
+                    recentMedicine: recentMedicine
                 }
                 
             });
             
-            if(r.anotacao.length < 10){
+/*             if(r.annotation.length < 10){
              res.status(400).json({error: "A anotação deve ter pelo menos 10 caracteres"})
              return
-            }
+            } */
             
 
             res.status(201).json(r);
