@@ -80,15 +80,15 @@ Authorization: Bearer {{token}}
 
 ### Delete um medicamento pelo id
 
-DELETE http://localhost:3000/medications/2 HTTP/1.1
+DELETE http://localhost:3000/medications/9 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {token}
+Authorization: Bearer {{token}}
 
 
 ### Atualizar um medicamento pelo id
 PUT http://localhost:3000/medications/1 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {token}
+Authorization: Bearer {{token}}
 
 {
      "name" : "Paracetamol",
