@@ -141,7 +141,8 @@ async function main() {
     for (const group of groupsData) {
       const hash = await bcrypt.hash("123456", 10);
 
-      const user = await prisma.user.create(
+      if(group.name === "PATIENT"){
+        const user = await prisma.user.create(
           {
               data: {
                   name: group.name,
@@ -151,10 +152,31 @@ async function main() {
                   phone: "19888887777",
                   email: group.name + "@gmail.com",
                   allergy: "nenhuma",
-                  birthDate: "2025-09-04T19:51:38.868Z"
+                  birthDate: "2025-09-04T19:51:38.868Z",
+                  situation: "AGUARDANDO TRIAGEM"
               }
           }
-      );
+        );
+      } else {
+        const user = await prisma.user.create(
+            {
+                data: {
+                    name: group.name,
+                    lastName: "sobrenome",
+                    password: hash,
+                    cpf: "123467890" + cpf.toString(),
+                    phone: "19888887777",
+                    email: group.name + "@gmail.com",
+                    allergy: "nenhuma",
+                    birthDate: "2025-09-04T19:51:38.868Z",
+                    situation: "EMPLOYEE"
+                }
+            }
+        );
+
+      }
+    
+
 
       cpf++;
     }
