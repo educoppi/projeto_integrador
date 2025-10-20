@@ -54,9 +54,9 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 
-### Ler todos os Usuários que começam o cpf
+### Ler todos os Usuários que estão na situacao aguardando triagem
 
-GET http://localhost:3000/users?cpf=12345678910 HTTP/1.1
+GET http://localhost:3000/users?situation=AGUARDANDO TRIAGEM HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
