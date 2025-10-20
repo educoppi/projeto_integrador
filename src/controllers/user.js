@@ -7,13 +7,15 @@ export const UserController = {
 
     async store(req, res, next) {
         try {
-            const { name, lastName, password, cpf, phone, email, group } = req.body;
+            const { name, lastName, password, cpf, phone, email, group, birthDate } = req.body;
 
             // if(!validaCPF(cpf)) {
             //         res.status(401).json('erro': 'CPF inválido')
             // }
 
             const hash = await bcrypt.hash(password, 10);
+
+            console.log(birthDate)
             
             const u = await prisma.user.create(
                 {
@@ -24,7 +26,9 @@ export const UserController = {
                         cpf,
                         phone,
                         email,
-                        group: group
+                        group: group,
+                        birthDate,
+                        situation: "EMPLOYEE"
                     }
                 }
             );
@@ -37,7 +41,9 @@ export const UserController = {
     },
     async storePatient(req, res, next){
         try {
-            const { name, lastName, cpf, phone, email, allergy, birthDate } = req.body;
+            const { name, lastName, cpf, phone, email, allergy, birthDate, situation } = req.body;
+
+            console.log(name)
             
             const u = await prisma.user.create(
                 {
@@ -50,9 +56,9 @@ export const UserController = {
                         group: {
                             connect: [{ id: 4 }]
                         },
-                        allergy: allergy,
-                        birthDate: birthDate
-
+                        allergy,
+                        birthDate,
+                        situation
                     }
                 }
             );
@@ -119,6 +125,7 @@ export const UserController = {
         if (req.query.name) query = {name: req.query.name}
         if (req.query.email) query = {email: req.query.email}
         if (req.query.cpf) query = {cpf: req.query.cpf}
+        if (req.query.situation) query = {situation: req.query.situation}
 
         const users = await prisma.user.findMany({
             where: query,

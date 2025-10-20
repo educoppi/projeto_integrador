@@ -66,6 +66,7 @@ model Group{
   roles RoleGroup[]
   users GroupUser[]
 }
+
 model GroupUser{
   id Int @id @default(autoincrement())
 
