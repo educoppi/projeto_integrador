@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImNwZiI6IjEyMzQ2Nzg5MDEiLCJuYW1lIjoiUkVDRVBDSU9OSVNUIiwiZ3JvdXAiOlsiUkVDRVBDSU9OSVNUIl0sImlhdCI6MTc2MDk4MDY3OSwiZXhwIjoxNzcxMzQ4Njc5fQ.a2o69mf2OsEG7N3wIfF5Ue3njGtZQX3fDXj58aHjTvw
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImNwZiI6IjEyMzQ2Nzg5MDIiLCJuYW1lIjoiRE9DVE9SIiwiZ3JvdXAiOlsiRE9DVE9SIl0sImlhdCI6MTc2MDk4ODI4MiwiZXhwIjoxNzcxMzU2MjgyfQ.XXCdglJPWDNRh_XNehsa4Lu90AHKM43JnQAVFTzYXdc
 
 ### Criando o usuario administrador
 POST https://projeto-integrador-lf6v.onrender.com/users HTTP/1.1
@@ -40,7 +40,7 @@ Content-Type: application/json
 
 {
     "senha":"123456",
-    "cpf":"1234678901"
+    "cpf":"1234678902"
 } 
 
 ### Ler todos os Usuários
