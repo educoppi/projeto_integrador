@@ -125,6 +125,7 @@ export const UserController = {
         if (req.query.name) query = {name: req.query.name}
         if (req.query.email) query = {email: req.query.email}
         if (req.query.cpf) query = {cpf: req.query.cpf}
+        if (req.query.situation) query = {situation: req.query.situation}
 
         const users = await prisma.user.findMany({
             where: query,
