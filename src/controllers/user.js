@@ -204,5 +204,26 @@ export const UserController = {
             res.status(404).json({error: "Usuário não encontrado"});
         }
 
+    }, 
+    async getPatientWithRecord(req, res, _next){
+        try {
+            const usersAwaitingAttendance = await prisma.user.findMany({
+                where: {
+                  situation: "AGUARDANDO ATENDIMENTO"
+                },
+                include: {
+                  recordsAsDoctor: {
+                    include: {
+                      user: true // inclui o doutor responsável pelo atendimento
+                    }
+                  }
+                }
+            });
+
+            res.status(200).json(usersAwaitingAttendance);
+
+        } catch (err) {
+            res.status(404).json({error: "Erro ao procurar"});
+        }
     }
 }
