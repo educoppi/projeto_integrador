@@ -86,3 +86,8 @@ GET https://projeto-integrador-lf6v.onrender.com/users/logado HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+### Ler usuario QUE ESTAO AGUARDANDO O ATENDIMENTO
+GET https://projeto-integrador-lf6v.onrender.com/users/patient/awaitingAttendance HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+

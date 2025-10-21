@@ -11,6 +11,8 @@ npx prisma db push --force-reset
 
 npx prisma studio
 
+npm run seed
+
 
 
 
