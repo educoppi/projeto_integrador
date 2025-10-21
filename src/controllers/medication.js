@@ -8,27 +8,38 @@ export const MedicationController = {
     //assíncrono nome_da_função(recebendo, responder, próxima coisa a ser executada)
     async store(req, res, next) {
         try {
-            const { name, quantity, dosage, type, expiresAt } = req.body; //dentro das variáveis vão os itens da tabela, caso tenha camel case, precisa estar exatamente igual
+            const { name, quantity, dosage, type, expiresAt } = req.body;
 
-                // validações
+            if (!name || !quantity || !dosage || !type || !expiresAt) {
+                return res.status(400).json({ message: 'Por favor, preencha todos os campos.' });
+            }
 
-            //nome da const é primeira letra do modelo 
-            const m = await prisma.medication.create({
-                data: {
-                    name,
+            // primeira validação para impedir cadastro se o medicamento já existir
+            const medicamentoExistente = await prisma.medication.findFirst({
+                where: {
+                    name: name.toLowerCase(),
                     dosage,
-                    quantity: Number(quantity),
-                    type,
-                    expiresAt
                 }
             });
 
-            //respondendo 201 (criado) e encapsulando no formato JSON a variável m
-            res.status(201).json(m); //201 é o código para a função de criação
+            if (medicamentoExistente) {
+                return res.status(409).json({ message: 'Medicamento com esse nome e dosagem já está cadastrado.' });
+            }
+
+            const m = await prisma.medication.create({
+                data: {
+                    name: name.toLowerCase(),
+                    dosage,
+                    quantity: Number(quantity),
+                    type,
+                    expiresAt,
+                }
+            });
+
+            res.status(201).json(m);
         } catch (err) {
             next(err);
         }
-
     },
 
     async index(req, res, _next) {
