@@ -214,7 +214,7 @@ export const UserController = {
                 include: {
                   recordsAsDoctor: {
                     include: {
-                      user: true // inclui o doutor responsável pelo atendimento
+                      user: true
                     }
                   }
                 }
