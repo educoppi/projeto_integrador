@@ -212,12 +212,8 @@ export const UserController = {
                   situation: "AGUARDANDO ATENDIMENTO"
                 },
                 include: {
-                  recordsAsDoctor: {
-                    include: {
-                      user: true
-                    }
+                    recordsAsDoctor: true // traz os registros do paciente
                   }
-                }
             });
 
             res.status(200).json(usersAwaitingAttendance);
