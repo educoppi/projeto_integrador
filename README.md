@@ -436,8 +436,7 @@ Body:
 "observation": "precisa de remedio"
 }
 
-markdown
-Copiar código
+
 
 ### Resposta
 
@@ -470,8 +469,7 @@ Exemplo:
 
 GET https://projeto-integrador-lf6v.onrender.com/exams?recordId=1 HTTP/1.1
 
-yaml
-Copiar código
+
 
 ### Resposta
 
@@ -484,6 +482,356 @@ Copiar código
 
 **Body:** lista JSON dos exames
 
+## User
+
+### 1 - Criar Usuário Administrador /POST  
+Cria um novo usuário com permissão de administrador.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+Body:
+
+{
+  "name":"Sara",
+  "lastName":"Malavazi",
+  "password":"123456",
+  "cpf":"12345678955",
+  "phone":"19888887777",
+  "email":"sara.malavazi@gmail.com",
+  "group": {
+    "connect": [{ "id": 6 }]
+  },
+  "birthDate":"2022-09-04T19:51:38.868Z"
+}
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **201**: Usuário criado com sucesso  
+- **400**: Dados inválidos  
+- **401**: Não autorizado  
+
+**Cabeçalho:**  
+
+**Body:** nenhum
+
+---
+
+### 2 - Criar Paciente /POST  
+Cria um novo usuário do tipo paciente.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+Body:
+
+{
+  "name":"victor",
+  "lastName":"JULHO",
+  "cpf":"12345678915",
+  "phone":"19888887777",
+  "email":"victorjULHO@gmail.com",
+  "allergy":"AGUA SOL E VENTO",
+  "birthDate":"2025-09-04T19:51:38.868Z",
+  "situation":"AGUARDANDO ATENDIMENTO"
+}
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **201**: Paciente criado com sucesso  
+- **400**: Dados inválidos  
+- **401**: Não autorizado  
+
+**Cabeçalho:**  
+
+**Body:** nenhum
+
+---
+
+### 3 - Login /POST  
+Realiza o login com CPF e senha.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json
+
+Body:
+
+{
+  "senha":"123456",
+  "cpf":"1234678902"
+}
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Login bem-sucedido  
+- **400**: CPF ou senha inválidos
+
+**Cabeçalho:**  
+
+**Body:** token JWT
+
+---
+
+### 4 - Listar Todos os Usuários /GET  
+Retorna todos os usuários cadastrados.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json
+
+GET https://projeto-integrador-lf6v.onrender.com/users HTTP/1.1
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Lista retornada com sucesso
+
+**Cabeçalho:**  
+
+**Body:** lista JSON dos usuários
+
+---
+
+### 5 - Filtrar Usuários por Nome /GET  
+Lista usuários filtrando pelo nome.
+
+### Requisição
+
+**Query:** name=Eduardo
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+GET http://localhost:3000/users?name=Eduardo HTTP/1.1
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Lista filtrada retornada com sucesso  
+- **401**: Não autorizado
+
+**Cabeçalho:**  
+
+**Body:** lista JSON dos usuários
+
+---
+
+### 6 - Filtrar Usuários por Situação /GET  
+Lista usuários com situação específica.
+
+### Requisição
+
+**Query:** situation=AGUARDANDO TRIAGEM
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+GET https://projeto-integrador-lf6v.onrender.com/users?situation=AGUARDANDO TRIAGEM HTTP/1.1
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Lista retornada com sucesso  
+- **401**: Não autorizado
+
+**Cabeçalho:**  
+
+**Body:** lista JSON dos usuários
+
+---
+
+### 7 - Obter Usuário por ID /GET  
+Busca usuário específico pelo ID.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+GET http://localhost:3000/users/7 HTTP/1.1
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Usuário retornado com sucesso  
+- **404**: Usuário não encontrado
+
+**Cabeçalho:**  
+
+**Body:** objeto JSON do usuário
+
+---
+
+### 8 - Deletar Usuário por ID /DELETE  
+Remove um usuário pelo ID.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+DELETE http://localhost:3000/users/2 HTTP/1.1
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Usuário deletado com sucesso  
+- **404**: Usuário não encontrado
+
+**Cabeçalho:**  
+
+**Body:** nenhum
+
+---
+
+### 9 - Atualizar Usuário /PUT  
+Atualiza dados do usuário.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+PUT http://localhost:3000/users/1 HTTP/1.1
+
+Body:
+
+{
+  "allergy":"Frutos do Mar"
+}
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Usuário atualizado com sucesso  
+- **404**: Usuário não encontrado
+
+**Cabeçalho:**  
+
+**Body:** objeto JSON atualizado
+
+---
+
+### 10 - Ler Usuário Logado /GET  
+Retorna dados do usuário autenticado pelo token.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+GET https://projeto-integrador-lf6v.onrender.com/users/logado HTTP/1.1
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Dados do usuário retornados com sucesso  
+- **401**: Não autorizado
+
+**Cabeçalho:**  
+
+**Body:** objeto JSON do usuário
+
+---
+
+### 11 - Pacientes Aguardando Atendimento /GET  
+Retorna lista de pacientes aguardando atendimento.
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:**  
+
+     Content-Type: application/json  
+     Authorization: Bearer {{token}}
+
+GET https://projeto-integrador-lf6v.onrender.com/users/patient/awaitingAttendance HTTP/1.1
+
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Lista retornada com sucesso  
+- **401**: Não autorizado
+
+**Cabeçalho:** nenhum
+
+**Body:** lista JSON dos pacientes
 
 
 npm install bcrypt express-session nodemailer uuid             (faz a criptografia da senha)
