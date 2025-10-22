@@ -371,7 +371,7 @@ Remove um movimento específico pelo seu ID
 - **404**: Movimentação não encontrada
 - **401**: Não autorizado (token inválido ou ausente)
 
-**Cabeçalho:**
+**Cabeçalho:** nenhum
 
 **Body:** nenhum
     
