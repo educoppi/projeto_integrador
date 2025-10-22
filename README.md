@@ -41,7 +41,6 @@ npm run seed
 ## Medication
 
 
-
 ### 1.1 - Criar Medicamento /POST
 Cadastra um novo medicamento no sistema
 
@@ -259,6 +258,123 @@ Remove um medicamento do sistema com base no seu ID
     Content-Type: application/json
 
 **Body:** nenhum
+
+## Movements
+
+### 1.1 - Criar Movimentação /POST  
+Registra uma nova movimentação de medicamento no sistema
+
+### Requisição
+
+**Query:** nenhum
+
+**Cabeçalho:** 
+
+    Content-Type: application/json
+    Authorization: Bearer {{token}}
+
+
+**Body:**
+
+```json
+{
+     "medicationId": 1,
+     "doctorId": 2,
+     "quantity": 200,
+     "date": "2025-09-04T19:51:38.868Z",
+     "movementType": "OUTBOUND"
+}
+```
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Medicamento deletado com sucesso
+- **401**: Token inválido ou ausente
+- **404**: Medicamento não encontrado
+- **500**: Erro interno no servidor
+
+**Cabeçalho:** nenhum
+
+**Body:** nenhum
+
+### 1.2 - Filtrar Movimentação por Tipo /GET  
+Busca movimentos filtrando pelo tipo informado
+
+### Requisição
+
+**Query:**
+
+    movementType: escolhe o tipo de movimentação (entrada ou saída)
+
+**Cabeçalho:** 
+
+    Content-Type: application/json
+    Authorization: Bearer {{token}}
+
+
+### Resposta
+
+#### Status Code:
+
+- **200**: Sucesso na busca dos movimentos
+- **400**: Parâmetro de filtro inválido ou ausente
+- **401**: Não autorizado (token inválido ou ausente)
+
+**Cabeçalho:**
+
+**Body:**
+
+```json
+[
+  {
+    "id": 1,
+    "medicationId": 1,
+    "doctorId": 2,
+    "quantity": 200,
+    "date": "2025-09-04T19:51:38.868Z",
+    "movementType": "OUTBOUND"
+  },
+  {
+    "id": 2,
+    "medicationId": 3,
+    "doctorId": 4,
+    "quantity": 50,
+    "date": "2025-09-10T10:20:30.000Z",
+    "movementType": "OUTBOUND"
+  }
+]
+```
+
+### 1.3 - Deletar Movimentação pelo ID /DELETE  
+Remove um movimento específico pelo seu ID
+
+### Requisição
+
+**Query:** 
+
+    id: selecionar o id da movimentação que deseja deletar
+
+**Cabeçalho:** 
+
+    Content-Type: application/json
+    Authorization: Bearer {{token}}
+
+
+### Resposta
+
+#### Status Code:
+
+- **204**: Movimentação deletada com sucesso (sem conteúdo)
+- **400**: ID inválido
+- **404**: Movimentação não encontrada
+- **401**: Não autorizado (token inválido ou ausente)
+
+**Cabeçalho:**
+
+**Body:** nenhum
+    
 
 
 ## Record
