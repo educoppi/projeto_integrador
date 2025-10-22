@@ -33,7 +33,7 @@ npx prisma db push --force-reset
 npm run seed
 
 ## Modelagem da API
-![Uploading mer_sistema_upa.png…]()
+
 
 
 # Endpoints da API
