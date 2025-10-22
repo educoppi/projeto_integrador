@@ -34,7 +34,7 @@ npm run seed
 
 ## Modelagem da API
 
-
+![MER do Banco de Dados](mer_db.png)
 
 # Endpoints da API
 
