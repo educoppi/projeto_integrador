@@ -12,7 +12,7 @@ export const RecordController = {
             });
 
             if(!p){
-                res.status(301).json({ error: "Paciente não encontrado" })
+                res.status(404).json({ error: "Paciente não encontrado" }) // alterado de 301 para 404
                 return
             }
 
@@ -21,7 +21,7 @@ export const RecordController = {
             });
             
             if(!u){
-                res.status(301).json({error: "Usuário não encontrado"})
+                res.status(404).json({ error: "Usuário não encontrado" }) // alterado de 301 para 404
                 return
             }
             
@@ -34,14 +34,7 @@ export const RecordController = {
                     symptom: symptom,
                     recentMedicine: recentMedicine
                 }
-                
             });
-            
-/*             if(r.annotation.length < 10){
-             res.status(400).json({error: "A anotação deve ter pelo menos 10 caracteres"})
-             return
-            } */
-            
 
             res.status(201).json(r);
 
@@ -49,6 +42,7 @@ export const RecordController = {
             next(err);
         }
     },
+
     //R - READ,SELECT,GET,FINDMANY
     async index(req, res, next) {
         let query = {}
@@ -57,6 +51,7 @@ export const RecordController = {
         const records = await prisma.record.findMany()
         res.status(200).json(records)
     },
+
     //r-read ,select ,get  
     // //<> buscar um item em vez da lista toda
     async show(req, res, _next) {
@@ -71,9 +66,9 @@ export const RecordController = {
         }
         catch (err) {
             res.status(404).json({ error: "Registro não encontrado" })
-
         }
     },
+
     async del(req, res, _next) {
         try {
             const id = Number(req.params.id)
@@ -86,28 +81,24 @@ export const RecordController = {
         }
         catch (err) {
             res.status(404).json({ error: "Registro não encontrado ou deletado" })
-
         }
     },
+
     async update(req, res, next) {
         try {
-
             const id = Number(req.params.id)
             let appointmentDate = { }
 
             if (req.body.appointmentDate) appointmentDate = { appointmentDate: new Date(req.body.appointmentDate) }
 
-
             const records = await prisma.record.update({
-
-                where: {id},                
+                where: { id },                
                 data: appointmentDate
             })
 
             res.status(200).json(records)
         } catch (err) {
-            res.status(404).json({ error: "erro" })
-
+            res.status(404).json({ error: "Registro não encontrado para atualização" }) // mensagem mais clara
         }
     },
 }
