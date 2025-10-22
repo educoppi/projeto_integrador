@@ -302,6 +302,57 @@ Copiar código
 **Body:** lista JSON dos exames
 
 
+## Presrição
+
+### 1.1 - Criar Prescrição 
+Cadastra uma nova prescriçaõ no sistema
+
+### Rota
+Post /prescription
+
+### Requisição
+
+**Query:** nenhum parâmetro
+
+**Cabeçalho:** 
+
+     Content-Type: application/json
+
+     Authorization: Bearer {{token}}
+
+Body: 
+
+```
+{
+    "recordId": 2,
+    "medicationId":1,
+    "quantity":10,
+    "observation": "Paciente em estado vegetativel"
+}
+```
+
+### Resposta
+
+#### Status Code:
+
+- **201**: Sucesso no cadastrado
+- **400**: Falha no cadastro por dados incompletos
+- **401**: Token ausente ou inválido
+- **500**: erro interno do servidor
+
+**Cabeçalho:**
+     Nenhum
+
+**Body:** 
+
+```
+{
+     "id": 123,
+     "message": "Prescrição criada com sucesso" 
+}
+```
+
+
 
 npm install bcrypt express-session nodemailer uuid             (faz a criptografia da senha)
 npm install jsonwebtoken
