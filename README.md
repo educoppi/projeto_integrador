@@ -32,6 +32,10 @@ npx prisma db push --force-reset
 
 npm run seed
 
+## Modelagem da API
+
+![MER do Banco de Dados](mer_db.png)
+
 # Endpoints da API
 
 ## Medication
@@ -832,6 +836,57 @@ GET https://projeto-integrador-lf6v.onrender.com/users/patient/awaitingAttendanc
 **Cabeçalho:** nenhum
 
 **Body:** lista JSON dos pacientes
+
+## Presrição
+
+### 1.1 - Criar Prescrição 
+Cadastra uma nova prescriçaõ no sistema
+
+### Rota
+Post /prescription
+
+### Requisição
+
+**Query:** nenhum parâmetro
+
+**Cabeçalho:** 
+
+     Content-Type: application/json
+
+     Authorization: Bearer {{token}}
+
+Body: 
+
+```
+{
+    "recordId": 2,
+    "medicationId":1,
+    "quantity":10,
+    "observation": "Paciente em estado vegetativel"
+}
+```
+
+### Resposta
+
+#### Status Code:
+
+- **201**: Sucesso no cadastrado
+- **400**: Falha no cadastro por dados incompletos
+- **401**: Token ausente ou inválido
+- **500**: erro interno do servidor
+
+**Cabeçalho:**
+     Nenhum
+
+**Body:** 
+
+```
+{
+     "id": 123,
+     "message": "Prescrição criada com sucesso" 
+}
+```
+
 
 
 npm install bcrypt express-session nodemailer uuid             (faz a criptografia da senha)
