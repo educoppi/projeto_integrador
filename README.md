@@ -837,9 +837,9 @@ GET https://projeto-integrador-lf6v.onrender.com/users/patient/awaitingAttendanc
 
 **Body:** lista JSON dos pacientes
 
-## Presrição
+## prescription
 
-### 1.1 - Criar Prescrição 
+### 1.1 - Criar prescription 
 Cadastra uma nova prescriçaõ no sistema
 
 ### Rota
@@ -883,7 +883,7 @@ Body:
 ```
 {
      "id": 123,
-     "message": "Prescrição criada com sucesso" 
+     "message": "prescription criada com sucesso" 
 }
 ```
 
