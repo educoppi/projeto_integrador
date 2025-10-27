@@ -102,7 +102,7 @@ model Record {
   level Int?
   symptom String?
   recentMedicine String? @map("recent_medicine")
-  annotation String?
+  annotationMedic String?
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
  
@@ -136,7 +136,7 @@ model Exam {
 model Prescription {
   id Int @id @default( autoincrement() )
   recordId Int @map("record_id") @unique
-  medicationId Int @map("medication_id") 
+  medicationName String @map("medication_name") 
   quantity Int
   observation String
  
@@ -144,7 +144,6 @@ model Prescription {
   updatedAt DateTime @map("updated_at") @updatedAt
  
   record Record @relation(fields: [recordId], references: [id])
-  medication Medication @relation(fields: [medicationId], references: [id])
  
   @@map("prescriptions")
 }
@@ -162,7 +161,6 @@ model Medication {
   expiresAt DateTime  @map("expires_at")
  
   movements Movement[] 
-  prescriptions Prescription[]
   @@map("medications")
  
 }

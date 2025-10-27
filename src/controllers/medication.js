@@ -43,31 +43,42 @@ export const MedicationController = {
     },
 
     async index(req, res, _next) {
-
         let query = {}
-
-        if (req.query.name) query.name = req.query.name
-
-        if (req.query.type) query.type = req.query.type
-
-        if (req.query.dosage) query.dosage = req.query.dosage
-
+    
+        if (req.query.name) {
+          query.name = {
+            contains: req.query.name,
+            mode: 'insensitive'
+          }
+        }
+    
+        if (req.query.type) {
+          query.type = req.query.type
+        }
+    
+        if (req.query.dosage) {
+          query.dosage = {
+            contains: req.query.dosage,
+            mode: 'insensitive'
+          }
+        }
+    
         if (req.query.quantity) query.quantity = Number(req.query.quantity)
-
+    
         if (req.query.min) query.quantity = { lt: Number(req.query.min) }
         if (req.query.minig) query.quantity = { lte: Number(req.query.minig) }
         if (req.query.max) query.quantity = { gt: Number(req.query.max) }
         if (req.query.maxig) query.quantity = { gte: Number(req.query.maxig) }
-
-
+    
         if (req.query.expiresAt) query.expiresAt = req.query.expiresAt
-
+    
         const medications = await prisma.medication.findMany({
             where: query
         })
-
-        res.status(200).json(medications) //200 é o código de sucesso de retorno no prisma
-    },
+    
+        res.status(200).json(medications)
+    }
+    ,
     async show(req, res, _next) {
         try {
             const id = Number(req.params.id);  //PRECISA DO NUMBER PQ O JSON TRANSFORMA TUDO EM STRING
