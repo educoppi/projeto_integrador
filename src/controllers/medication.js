@@ -77,8 +77,7 @@ export const MedicationController = {
         })
     
         res.status(200).json(medications)
-    }
-    ,
+    },
     async show(req, res, _next) {
         try {
             const id = Number(req.params.id);  //PRECISA DO NUMBER PQ O JSON TRANSFORMA TUDO EM STRING
@@ -132,6 +131,30 @@ export const MedicationController = {
         } catch (err) {
             next(err);
         }
-    }
+    },
+    async estoqueBaixo(req, res, next) {
+        try {
+          const limit = Number(req.query.limit) || 400;
+      
+          const medications = await prisma.medication.findMany({
+            where: {
+              quantity: {
+                lt: limit
+              }
+            },
+            orderBy: {
+              quantity: 'asc'
+            }
+          });
+      
+          if (medications.length === 0) {
+            return res.status(200).json({ message: 'Nenhum medicamento com estoque baixo.' });
+          }
+      
+          res.status(200).json(medications);
+        } catch (err) {
+          next(err);
+        }
+      }
 
 }
