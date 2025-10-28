@@ -216,6 +216,8 @@ export const UserController = {
                   }
             });
 
+            console.log(usersAwaitingAttendance);
+
             res.status(200).json(usersAwaitingAttendance);
 
         } catch (err) {

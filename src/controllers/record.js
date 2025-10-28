@@ -36,6 +36,14 @@ export const RecordController = {
                 }
             });
 
+            
+            if(r){
+                await prisma.user.update({
+                    where: { id: Number(patientId) },
+                    data: { situation: "AGUARDANDO ATENDIMENTO" }
+                })
+            }
+            
             res.status(201).json(r);
 
         } catch (err) {
