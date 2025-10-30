@@ -132,29 +132,43 @@ export const MedicationController = {
             next(err);
         }
     },
-    async estoqueBaixo(req, res, next) {
-        try {
-          const limit = Number(req.query.limit) || 400;
-      
-          const medications = await prisma.medication.findMany({
-            where: {
-              quantity: {
-                lt: limit
-              }
-            },
-            orderBy: {
-              quantity: 'asc'
+    async alertasMedicamentos(req, res, next) {
+      try {
+        const limit = Number(req.query.limit) || 400;
+        const hoje = new Date();
+        const trintaDiasDepois = new Date();
+        trintaDiasDepois.setDate(hoje.getDate() + 30);
+    
+        const estoqueBaixo = await prisma.medication.findMany({
+          where: {
+            quantity: {
+              lt: limit
             }
-          });
-      
-          if (medications.length === 0) {
-            return res.status(200).json({ message: 'Nenhum medicamento com estoque baixo.' });
+          },
+          orderBy: {
+            quantity: 'asc'
           }
-      
-          res.status(200).json(medications);
-        } catch (err) {
-          next(err);
-        }
+        });
+    
+        const vencendo = await prisma.medication.findMany({
+          where: {
+            expiresAt: {
+              lte: trintaDiasDepois
+            }
+          },
+          orderBy: {
+            expiresAt: 'asc'
+          }
+        });
+    
+        res.status(200).json({
+          estoqueBaixo,
+          vencendo
+        });
+      } catch (err) {
+        next(err);
       }
+    }
+    
 
 }
