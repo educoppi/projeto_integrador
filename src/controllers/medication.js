@@ -157,7 +157,7 @@ export const MedicationController = {
             }
           },
           orderBy: {
-            expirationDate: 'asc'
+            expiresAt: 'asc'
           }
         });
     
