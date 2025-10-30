@@ -6,12 +6,11 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "patientId":48,
-    "appointmentDate":"2025-09-15",
-    "level":5,
+    "patientId":59,
+    "appointmentDate":"2025-10-30T17:28:00.307Z",
+    "level":4,
     "symptom":"dor na cabeça", 
-    "recentMedicine":"Dipirona" 
-
+    "recentMedicine":"" 
 }
 
 ### aqui busca todos
