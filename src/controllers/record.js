@@ -6,6 +6,8 @@ export const RecordController = {
     async store(req, res, next) {
         try {
             const { patientId, appointmentDate, level, symptom, recentMedicine, annotationTriage} = req.body;
+            
+            console.log("#####################",req.body)
 
             let p = await prisma.user.findFirst({
                 where: { id: Number(patientId) }
