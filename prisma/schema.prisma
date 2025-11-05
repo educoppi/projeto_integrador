@@ -100,7 +100,8 @@ model Record {
   level Int?
   symptom String?
   recentMedicine String? @map("recent_medicine")
-  annotation String?
+  annotationMedic String? @map("annotation_medic")
+  annotationTriage String? @map("annotation_triage")
   createdAt DateTime @map("created_at") @default( now() )
   updatedAt DateTime @map("updated_at") @updatedAt
  
