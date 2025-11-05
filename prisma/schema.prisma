@@ -1,194 +1,148 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
- 
- 
-//FK -> User
-// variavel Model(nome da tabela mas no singular) relação(FK, PK, ação)
-//ex: clientId Int @map("client_id")
-// client User @relation(fields: [clientId], references: [id], onDelete: Cascade)
- 
-// quem carrega o 1 tem o vetor
-// habits Habit []
- 
 generator client {
   provider = "prisma-client-js"
 }
- 
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
- 
-//Eduardo Coppi
-model User {
- 
-  id Int @id @default(autoincrement())
- 
-  name String
-  lastName String @map("last_name")
-  password String?
-  cpf String @unique
-  phone String
-  email String @unique
-  allergy String?
-  situation String
-  birthDate DateTime @map("birth_date")
- 
-  createdAt DateTime  @map("created_at") @default(now())
-  updatedAt DateTime @map("update_at") @updatedAt
- 
-  recordsAsUser Record[] @relation("recordUser")
-  recordsAsDoctor Record[] @relation("recordDoctor")
- 
-  movementsAsUser   Movement[] @relation("MovementUser")
-  movementsAsDoctor Movement[] @relation("MovementDoctor")
 
-  group GroupUser[]
- 
+model User {
+  id                Int         @id @default(autoincrement())
+  name              String
+  lastName          String      @map("last_name")
+  password          String?
+  cpf               String      @unique
+  phone             String
+  email             String      @unique
+  allergy           String?
+  situation         String
+  birthDate         DateTime    @map("birth_date")
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("update_at")
+  group             GroupUser[]
+  movementsAsDoctor Movement[]  @relation("MovementDoctor")
+  movementsAsUser   Movement[]  @relation("MovementUser")
+  recordsAsDoctor   Record[]    @relation("recordDoctor")
+  recordsAsUser     Record[]    @relation("recordUser")
+
   @@map("users")
 }
 
-model Role{
-  id  Int  @id @default(autoincrement())
-  name  String @unique
+model Role {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
   description String
-
-  groups RoleGroup[]
+  groups      RoleGroup[]
 }
 
-model Group{
-  id Int @id @default(autoincrement())
-  name String @unique
-  description String 
-
-  roles RoleGroup[]
-  users GroupUser[]
+model Group {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  description String
+  users       GroupUser[]
+  roles       RoleGroup[]
 }
 
-model GroupUser{
-  id Int @id @default(autoincrement())
-
-  user User @relation(fields: [userId], references: [id])
-  userId Int 
-
-
-  group Group @relation(fields: [groupId], references: [id])
+model GroupUser {
+  id      Int   @id @default(autoincrement())
+  userId  Int
   groupId Int
+  group   Group @relation(fields: [groupId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
 
   @@unique([userId, groupId], name: "userId_groupId")
 }
 
-
-model RoleGroup{
-  id Int @id @default(autoincrement())
-
-  group Group @relation(fields: [groupId], references: [id])
+model RoleGroup {
+  id      Int   @id @default(autoincrement())
   groupId Int
+  roleId  Int
+  group   Group @relation(fields: [groupId], references: [id])
+  role    Role  @relation(fields: [roleId], references: [id])
 
-  role Role @relation(fields: [roleId], references: [id])
-  roleId Int 
-
-  @@unique([groupId, roleId ], name: "groupId_roleId")
+  @@unique([groupId, roleId], name: "groupId_roleId")
 }
 
-//Eduardo Lombardo
 model Record {
-  id Int @id @default( autoincrement() )
-  userId Int @map("user_id")
-  patientId Int @map("patient_id")
-  appointmentDate DateTime @map("appointment_date")
-  level Int?
-  symptom String?
-  recentMedicine String? @map("recent_medicine")
-  annotationMedic String? @map("annotation_medic")
-  annotationTriage String? @map("annotation_triage")
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
- 
-  user User @relation("recordUser", fields: [userId], references: [id])
-  patient User @relation("recordDoctor", fields: [patientId], references: [id])
- 
-  exam Exam?
-  prescription Prescription?
- 
+  id               Int           @id @default(autoincrement())
+  userId           Int           @map("user_id")
+  patientId        Int           @map("patient_id")
+  appointmentDate  DateTime      @map("appointment_date")
+  level            Int?
+  symptom          String?
+  recentMedicine   String?       @map("recent_medicine")
+  annotationMedic  String?
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+  annotationTriage String?
+  exam             Exam?
+  prescription     Prescription?
+  patient          User          @relation("recordDoctor", fields: [patientId], references: [id])
+  user             User          @relation("recordUser", fields: [userId], references: [id])
+
   @@map("records")
 }
- 
-//Eduardo Lombardo
+
 model Exam {
-  id Int @id @default( autoincrement() )
-  recordId Int @map("record_id") @unique
-  date DateTime
-  type String
-  result String
+  id          Int      @id @default(autoincrement())
+  recordId    Int      @unique @map("record_id")
+  date        DateTime
+  type        String
+  result      String
   observation String
- 
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
- 
-  record Record @relation(fields: [recordId], references: [id])
- 
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  record      Record   @relation(fields: [recordId], references: [id])
+
   @@map("exams")
 }
- 
-//Sara
+
 model Prescription {
-  id Int @id @default( autoincrement() )
-  recordId Int @map("record_id") @unique
-  medicationName String @map("medication_name") 
-  quantity Int
-  observation String
- 
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
- 
-  record Record @relation(fields: [recordId], references: [id])
- 
+  id             Int      @id @default(autoincrement())
+  recordId       Int      @unique @map("record_id")
+  quantity       Int
+  observation    String
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  medicationName String   @map("medication_name")
+  record         Record   @relation(fields: [recordId], references: [id])
+
   @@map("prescriptions")
 }
- 
-//Rafael
+
 model Medication {
-  id Int @id @default( autoincrement() )
-  createdAt DateTime @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
- 
-  name String
-  dosage String
-  quantity Int
-  type String
-  expiresAt DateTime  @map("expires_at")
- 
-  movements Movement[] 
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  name      String
+  dosage    String
+  quantity  Int
+  type      String
+  expiresAt DateTime   @map("expires_at")
+  movements Movement[]
+
   @@map("medications")
- 
 }
- 
-//Rafael
+
 model Movement {
-  id Int @id @default( autoincrement() )
-  createdAt DateTime  @map("created_at") @default( now() )
-  updatedAt DateTime @map("updated_at") @updatedAt
- 
-  medicationId Int @map("medication_id")
-  userId Int @map("user_id")
-  doctorId Int @map("doctor_id")
-  date DateTime
-  quantity Int 
+  id           Int          @id @default(autoincrement())
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+  medicationId Int          @map("medication_id")
+  userId       Int          @map("user_id")
+  doctorId     Int          @map("doctor_id")
+  date         DateTime
+  quantity     Int
   movementType MovementType @map("movement_type")
- 
-  // FK -> Medication
-  medication Medication @relation(fields: [medicationId], references: [id])
-  user User @relation("MovementUser", fields: [userId], references:[id])
-  doctor User @relation("MovementDoctor", fields: [doctorId], references:[id])
- 
- 
+  doctor       User         @relation("MovementDoctor", fields: [doctorId], references: [id])
+  medication   Medication   @relation(fields: [medicationId], references: [id])
+  user         User         @relation("MovementUser", fields: [userId], references: [id])
+
   @@map("movements")
 }
- 
+
 enum MovementType {
   INBOUND
   OUTBOUND
 }
-
-
