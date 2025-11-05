@@ -8,9 +8,10 @@ Content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-     "medicationId": 1,
+     "medicationId": 9,
+     "userId": 3,
      "doctorId": 2,
-     "quantity": 200,
+     "quantity": 1,
      "date": "2025-09-04T19:51:38.868Z",
      "movementType": "OUTBOUND"
 }
