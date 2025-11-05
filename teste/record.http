@@ -8,10 +8,10 @@ Authorization: Bearer {{token}}
 {
     "patientId":59,
     "appointmentDate":"2025-10-30T17:28:00.307Z",
-    "level":4,
-    "symptom":"dor na cabeça", 
+    "level":2,
+    "symptom":"dor na cabeçaa", 
     "recentMedicine":"",
-    "annotationTriage":"Acidente de moto"
+    "annotationTriage":"Acidente de motoooo"
 }
 
 ### aqui busca todos
