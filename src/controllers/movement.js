@@ -4,7 +4,7 @@ export const MovementController = {
 
   async store(req, res, next) {
     try {
-      const { medicationId, doctorId, date, quantity, movementType } = req.body;
+      const { medicationId, doctorId, date, quantity, movementType, approvedMovement } = req.body;
 
 
       const medication = await prisma.medication.findUnique({
@@ -38,7 +38,8 @@ export const MovementController = {
             doctorId: doctorId ? Number(doctorId) : null,
             quantity: Number(quantity),
             date,
-            movementType
+            movementType,
+            approvedMovement,
           },
           include: {
             user: true,
