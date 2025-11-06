@@ -9,12 +9,12 @@ Authorization: Bearer {{token}}
 
 {
      "medicationId": 9,
-     "userId": 3,
-     "doctorId": null,
+     "userId": null,
+     "doctorId": 2,
      "quantity": 100,
      "date": "2025-11-06T19:51:38.868Z",
      "approvedMovement": false,
-     "movementType": "INBOUND"
+     "movementType": "OUTBOUND"
 }
 
 ### Ler um medicamento
