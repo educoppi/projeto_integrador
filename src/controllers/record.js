@@ -26,7 +26,7 @@ export const RecordController = {
                 res.status(404).json({ error: "Usuário não encontrado" }) // alterado de 301 para 404
                 return
             }
-            
+
             const r = await prisma.record.create({
                 data: {
                     patientId: Number(patientId),
