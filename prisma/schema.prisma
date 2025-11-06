@@ -135,7 +135,7 @@ model Movement {
   date         DateTime
   quantity     Int
   movementType MovementType @map("movement_type")
-  approvedMovement Boolean  @map("approved_movement")
+  approvedMovement Boolean  @default(false) @map("approved_movement")
 
   doctor       User?         @relation("MovementDoctor", fields: [doctorId], references: [id])
   medication   Medication   @relation(fields: [medicationId], references: [id])
