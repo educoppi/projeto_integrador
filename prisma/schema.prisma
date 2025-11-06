@@ -130,8 +130,8 @@ model Movement {
   createdAt    DateTime     @default(now()) @map("created_at")
   updatedAt    DateTime     @updatedAt @map("updated_at")
   medicationId Int          @map("medication_id")
-  userId       Int          @map("user_id")
-  doctorId     Int          @map("doctor_id")
+  userId       Int?          @map("user_id")
+  doctorId     Int?          @map("doctor_id")
   date         DateTime
   quantity     Int
   movementType MovementType @map("movement_type")

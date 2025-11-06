@@ -12,7 +12,7 @@ Authorization: Bearer {{token}}
      "userId": 3,
      "doctorId": 2,
      "quantity": 100,
-     "date": "2025-09-04T19:51:38.868Z",
+     "date": "2025-11-06T19:51:38.868Z",
      "approvedMovement": false,
      "movementType": "INBOUND"
 }
