@@ -201,7 +201,7 @@ export const MovementController = {
       if (req.body.date) update.date = new Date(req.body.date);
       if (req.body.approvedMovement) update.approvedMovement = Boolean(req.body.approvedMovement);
 
-      console.log(approvedMovement)
+      console.log(req.body.approvedMovement);
 
       const movement = await prisma.movement.update({
         where: { id },
