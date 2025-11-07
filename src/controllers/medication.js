@@ -120,6 +120,24 @@ export const MedicationController = {
             if (req.body.quantity) update.quantity = Number(req.body.quantity)
             if (req.body.expiresAt) update.expiresAt = req.body.expiresAt
 
+            const currentMedication = await prisma.medication.findUniqueOrThrow({
+              where: { id }
+            })
+
+            if (currentMedication.quantity !== update.quantity) {
+              const movement = {
+                medicationId: id,
+                userId: req.usuario.id,
+                date: new Date(),
+                quantity: Math.abs(update.quantity - currentMedication.quantity),
+                movementType: (update.quantity > currentMedication.quantity) ? 'INBOUND' : 'OUTBOUND',
+                approvedMovement: true
+              }
+
+              await prisma.movement.create({
+                data: movement
+              });
+            }
 
             const medication = await prisma.medication.update({
                 where: { id },
