@@ -2,7 +2,7 @@ import prisma from '../prisma.js';
 
 export const MovementController = {
 
-  async store(req, res, next) {
+  async storeFarmacia(req, res, next) {
     try {
       const { medicationId, doctorId, date, quantity, movementType, approvedMovement } = req.body;
 
@@ -61,8 +61,68 @@ export const MovementController = {
     } catch (err) {
       next(err);
     }
-  }
-  ,
+  },
+
+  async storeDoctor(req, res, next) {
+    try {
+      const { medicationId, date, quantity, movementType, approvedMovement } = req.body;
+
+
+      const medication = await prisma.medication.findUnique({
+        where: { id: Number(medicationId) } // busca o estoque do remédio
+      });
+
+      if (!medication) {
+        return res.status(404).json({ error: 'Medicamento não encontrado.' });
+      }
+
+      let newQuantity = medication.quantity;
+
+      if (movementType === 'INBOUND') {
+        newQuantity += Number(quantity); // soma a quantidade da movimentação com a quantidade do estoque
+      } else if (movementType === 'OUTBOUND') {  //subtrai a quantidade da movimentação com a quantidade do estoque no banco
+
+        if (medication.quantity < quantity) {
+          return res.status(400).json({ error: 'Quantidade insuficiente em estoque.' });
+        }
+        newQuantity -= Number(quantity);
+      } else {
+        return res.status(400).json({ error: 'Tipo de movimentação inválido.' });
+      }
+
+
+      const [movement, updatedMedication] = await prisma.$transaction([ // transaction é utilizado para movimentações complexas, primeiro testa e depois completa ou reverte tudo
+        prisma.movement.create({
+          data: {
+            medicationId: Number(medicationId),
+            userId: null,
+            doctorId: Number(req.usuario.id),
+            quantity: Number(quantity),
+            date,
+            movementType,
+            approvedMovement,
+          },
+          include: {
+            user: true,
+            doctor: true,
+            medication: true
+          }
+        }),
+        prisma.medication.update({
+          where: { id: Number(medicationId) },
+          data: { quantity: newQuantity }
+        })
+      ]);
+
+      res.status(201).json({
+        movement,
+        updatedMedication
+      });
+
+    } catch (err) {
+      next(err);
+    }
+  },
 
   async index(req, res, next) {
     try {
@@ -139,6 +199,7 @@ export const MovementController = {
       if (req.body.doctorId) update.doctorId = Number(req.body.doctorId);
       if (req.body.medicationId) update.medicationId = Number(req.body.medicationId);
       if (req.body.date) update.date = new Date(req.body.date);
+      if (req.body.approvedMovement) update.approvedMovement = Boolean(req.body.approvedMovement);
 
       const movement = await prisma.movement.update({
         where: { id },
