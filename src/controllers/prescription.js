@@ -4,41 +4,28 @@ export const PrescriptionController = {
 
     async store(req, res, next) {
         try {
-            const {recordId, medicationId, quantity, observation} = req.body;
+            // Agora esperamos: recordId, text e observation
+            const { recordId, text, observation } = req.body;
 
-           let r = await prisma.record.findFirst({
-                where: {id: Number(recordId)}
+            let r = await prisma.record.findFirst({
+                where: { id: Number(recordId) }
             });
 
-            if(!r){
-                res.status(301).json({
-                    'error':"Record informado não encontrado"
+            if (!r) {
+                res.status(404).json({
+                    error: "Record informado não encontrado"
                 });
-                return
+                return;
             }
 
-            let m = await prisma.medication.findFirst({
-                where: {id: Number(medicationId)}
-            });
-
-            if(!m){
-                res.status(301).json({
-                    'error':"Medication informado não encontrado"
-                });
-                return
-            }
-
-
-            const p = await prisma.prescription.create(
-                {
-                    data: {
-                          recordId: Number(recordId),
-                          medicationId: Number(medicationId),
-                          quantity: Number(quantity),
-                          observation: observation
-                    }
+            // Criação da prescrição apenas com texto e observação
+            const p = await prisma.prescription.create({
+                data: {
+                    recordId: Number(recordId),
+                    text: text,
+                    observation: observation || null
                 }
-            );
+            });
 
             res.status(201).json(p);
 
@@ -46,65 +33,65 @@ export const PrescriptionController = {
             next(err);
         }
     },
-    async index(req,res,next){
 
-        let query = {}
+    async index(req, res, next) {
+        let query = {};
 
-        if (req.query.recordId) query = {recordId: Number(req.query.recordId)}
-        if (req.query.medicationId) query = {medicationId: Number(req.query.medicationId)}
-        if (req.query.quantity) query = {quantity:{gte: Number(req.query.quantity)}}
-        if (req.query.observation) query = {observation: req.query.observation}
+        if (req.query.recordId) query = { recordId: Number(req.query.recordId) };
+        if (req.query.text) query = { text: { contains: req.query.text } };
+        if (req.query.observation) query = { observation: { contains: req.query.observation } };
 
-
-        const prescriptions = await prisma.prescription.findMany({ 
+        const prescriptions = await prisma.prescription.findMany({
             where: query
-         })
+        });
 
-        res.status(200).json(prescriptions)
+        res.status(200).json(prescriptions);
     },
+
     async show(req, res, _next) {
-        try{
-            const id = Number(req.params.id)
-    
-            const p = await prisma.prescription.findFirstOrThrow({
-                where: {id}
-            })
-    
-            res.status(200).json(p)
-        }catch(err){
-            res.status(404).json({error:"Prescrição não encontrada"});
-        }
-    },
-    async del(req,res,_next) {
-        try{
-            const id = Number(req.params.id)
-    
-            const p = await prisma.prescription.delete({
-                where: {id}
-            })
-    
-            res.status(200).json(p)
-        }catch(err){
-            res.status(404).json({error:"Prescrição deletada"});
-        }
-    },
-    async update(req,res,_next) {
-        try{
+        try {
             const id = Number(req.params.id);
-            const quantity = Number(req.body.quantity);
+
+            const p = await prisma.prescription.findFirstOrThrow({
+                where: { id }
+            });
+
+            res.status(200).json(p);
+        } catch (err) {
+            res.status(404).json({ error: "Prescrição não encontrada" });
+        }
+    },
+
+    async del(req, res, _next) {
+        try {
+            const id = Number(req.params.id);
+
+            const p = await prisma.prescription.delete({
+                where: { id }
+            });
+
+            res.status(200).json(p);
+        } catch (err) {
+            res.status(404).json({ error: "Prescrição deletada ou inexistente" });
+        }
+    },
+
+    async update(req, res, _next) {
+        try {
+            const id = Number(req.params.id);
+            const { text, observation } = req.body;
 
             const prescription = await prisma.prescription.update({
-                where: {
-                    id: id
-                },
+                where: { id },
                 data: {
-                    quantity: quantity
+                    text,
+                    observation
                 }
-            })
+            });
 
-            res.status(200).json(prescription)
-        }catch(err){
-            res.status(404).json({error:"Erro prescrição não atualizada"})
+            res.status(200).json(prescription);
+        } catch (err) {
+            res.status(404).json({ error: "Erro: prescrição não atualizada" });
         }
     }
-}
+};
