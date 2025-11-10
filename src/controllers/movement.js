@@ -187,7 +187,9 @@ export const MovementController = {
           medication: true
         }
       });
-
+      
+      res.status(200).json(movement);
+      
     } catch (err) {
       next(err);
     }
