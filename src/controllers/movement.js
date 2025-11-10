@@ -152,6 +152,14 @@ export const MovementController = {
         }
       });
 
+      const medicationId = movement.medicationId;
+
+      const medication = await prisma.medication.findFirstOrThrow({
+        where: { id: medicationId }
+      });
+      
+
+
       let newQuantity = movement.quantity;
 
       if (medication.quantity < movement.quantity) {
