@@ -79,7 +79,7 @@ model Record {
   exam             Exam?
   prescription     Prescription?
   patient          User          @relation("recordDoctor", fields: [patientId], references: [id])
-  user             User          @relation("recordUser", fields: [userId], references: [id])
+  user             User?         @relation("recordUser", fields: [userId], references: [id])
 
   @@map("records")
 }
