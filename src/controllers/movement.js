@@ -166,7 +166,7 @@ export const MovementController = {
         return res.status(400).json({ error: 'Quantidade insuficiente em estoque.' });
       }
 
-      newQuantity -= Number(quantity);
+      newQuantity -= Number(movement.quantity);
 
       prisma.medication.update({
         where: { id: Number(medicationId) },
