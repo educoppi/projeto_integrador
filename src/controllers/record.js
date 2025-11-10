@@ -6,8 +6,6 @@ export const RecordController = {
         try {
             const { patientId, appointmentDate, level, symptom, recentMedicine, annotationTriage } = req.body;
 
-            console.log("#####################", req.body);
-
             // 🔍 validações básicas
             if (!annotationTriage || annotationTriage.trim().length < 10) {
                 return res.status(400).json({ error: "A anotação deve ter pelo menos 10 caracteres" });
@@ -34,7 +32,6 @@ export const RecordController = {
                 data: {
                     patientId: Number(patientId),
                     appointmentDate: new Date(appointmentDate),
-                    userId: req.usuario.id,
                     level: level ? Number(level) : null,
                     symptom,
                     recentMedicine,
