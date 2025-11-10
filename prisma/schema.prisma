@@ -99,14 +99,15 @@ model Exam {
 }
 
 model Prescription {
-  id             Int      @id @default(autoincrement())
-  recordId       Int      @unique @map("record_id")
-  quantity       Int
-  observation    String
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
-  medicationName String   @map("medication_name")
-  record         Record   @relation(fields: [recordId], references: [id])
+  id           Int       @id @default(autoincrement())
+  recordId     Int       @map("record_id") @unique
+  text         String    @map("text") 
+  observation  String?   @map("observation")
+
+  createdAt    DateTime  @map("created_at") @default(now())
+  updatedAt    DateTime  @map("updated_at") @updatedAt
+
+  record       Record    @relation(fields: [recordId], references: [id])
 
   @@map("prescriptions")
 }

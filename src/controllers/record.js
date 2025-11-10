@@ -9,9 +9,12 @@ export const RecordController = {
             
             console.log("#####################",req.body)
 
-            let p = await prisma.user.findFirst({
-                where: { id: Number(patientId) }
-            });
+      // 🔍 validações básicas antes de criar o registro
+      if (!anotacao || anotacao.trim().length < 10) {
+        return res
+          .status(400)
+          .json({ error: "A anotação deve ter pelo menos 10 caracteres" });
+      }
 
             if(!p){
                 res.status(404).json({ error: "Paciente não encontrado" }) // alterado de 301 para 404
@@ -63,53 +66,83 @@ export const RecordController = {
         res.status(200).json(records)
     },
 
-    //r-read ,select ,get  
-    // //<> buscar um item em vez da lista toda
-    async show(req, res, _next) {
-        try {
-            const id = Number(req.params.id)
+  // R - READ (LISTA DE REGISTROS)
+  async index(req, res, next) {
+    try {
+      const records = await prisma.record.findMany({
+        include: {
+          patient: { select: { name: true } },
+          user: { select: { name: true } },
+          prescription: {
+            select: {
+              id: true,
+              observation: true,
+            },
+          },
+        },
+        orderBy: { appointmentDate: 'desc' },
+      });
 
-            const r = await prisma.record.findFirstOrThrow({
-                where: { id }
-            });
+      res.status(200).json(records);
+    } catch (err) {
+      next(err);
+    }
+  },
 
-            res.status(200).json(r)
-        }
-        catch (err) {
-            res.status(404).json({ error: "Registro não encontrado" })
-        }
-    },
+  // R - READ (UM REGISTRO ESPECÍFICO)
+  async show(req, res, _next) {
+    try {
+      const id = Number(req.params.id);
 
-    async del(req, res, _next) {
-        try {
-            const id = Number(req.params.id)
+      const r = await prisma.record.findFirstOrThrow({
+        where: { id },
+        include: {
+          patient: { select: { name: true } },
+          user: { select: { name: true } },
+          prescription: true,
+        },
+      });
 
-            const d = await prisma.record.delete({
-                where: { id }
-            });
+      res.status(200).json(r);
+    } catch (err) {
+      res.status(404).json({ error: "Registro não encontrado" });
+    }
+  },
 
-            res.status(200).json(d)
-        }
-        catch (err) {
-            res.status(404).json({ error: "Registro não encontrado ou deletado" })
-        }
-    },
+  // D - DELETE
+  async del(req, res, _next) {
+    try {
+      const id = Number(req.params.id);
 
-    async update(req, res, next) {
-        try {
-            const id = Number(req.params.id)
-            let appointmentDate = { }
+      const d = await prisma.record.delete({
+        where: { id },
+      });
 
-            if (req.body.appointmentDate) appointmentDate = { appointmentDate: new Date(req.body.appointmentDate) }
+      res.status(200).json(d);
+    } catch (err) {
+      res.status(404).json({ error: "Registro não encontrado ou já deletado" });
+    }
+  },
 
-            const records = await prisma.record.update({
-                where: { id },                
-                data: appointmentDate
-            })
+  // U - UPDATE
+  async update(req, res, next) {
+    try {
+      const id = Number(req.params.id);
+      const dataToUpdate = {};
 
-            res.status(200).json(records)
-        } catch (err) {
-            res.status(404).json({ error: "Registro não encontrado para atualização" }) // mensagem mais clara
-        }
-    },
-}
+      if (req.body.appointmentDate)
+        dataToUpdate.appointmentDate = new Date(req.body.appointmentDate);
+      if (req.body.annotation)
+        dataToUpdate.annotation = req.body.annotation.trim();
+
+      const updated = await prisma.record.update({
+        where: { id },
+        data: dataToUpdate,
+      });
+
+      res.status(200).json(updated);
+    } catch (err) {
+      res.status(404).json({ error: "Erro: registro não atualizado" });
+    }
+  },
+};
