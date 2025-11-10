@@ -2,27 +2,42 @@ import prisma from '../prisma.js';
 
 export const MovementController = {
 
-  async store(req, res, next) {
+  async storeDoctor(req, res, next) {
     try {
-      const { medicationId, doctorId, date, quantity, movementType } = req.body;
+      const { medicationId, quantity } = req.body;
 
-      const movement = await prisma.movement.create({
-        data: {
-          medicationId: Number(medicationId),
-          userId: Number(req.usuario.id),
-          doctorId: doctorId ? Number(doctorId) : null,
-          quantity: Number(quantity),
-          date,
-          movementType
-        },
-        include: {
-          user: true,
-          doctor: true,
-          medication: true
-        }
+
+      const medication = await prisma.medication.findUnique({
+        where: { id: Number(medicationId) } // busca o estoque do remédio
       });
 
-      res.status(201).json(movement);
+      if (!medication) {
+        return res.status(404).json({ error: 'Medicamento não encontrado.' });
+      }
+
+      const [movement, updatedMedication] = await prisma.$transaction([ // transaction é utilizado para movimentações complexas, primeiro testa e depois completa ou reverte tudo
+        prisma.movement.create({
+          data: {
+            medicationId: Number(medicationId),
+            userId: null,
+            doctorId: Number(req.usuario.id),
+            quantity: Number(quantity),
+            date: new Date(),
+            movementType: 'OUTBOUND',
+            approvedMovement: false,
+          },
+          include: {
+            user: true,
+            doctor: true,
+            medication: true
+          }
+        })
+      ]);
+
+      res.status(201).json({
+        movement,
+        updatedMedication
+      });
 
     } catch (err) {
       next(err);
@@ -39,6 +54,7 @@ export const MovementController = {
       if (req.query.date) query.date = new Date(req.query.date);
       if (req.query.quantity) query.quantity = Number(req.query.quantity);
       if (req.query.movementType) query.movementType = req.query.movementType;
+      if (req.query.approvedMovement) query.approvedMovement = req.query.approvedMovement;
 
       const movements = await prisma.movement.findMany({
         where: query,
@@ -103,6 +119,9 @@ export const MovementController = {
       if (req.body.doctorId) update.doctorId = Number(req.body.doctorId);
       if (req.body.medicationId) update.medicationId = Number(req.body.medicationId);
       if (req.body.date) update.date = new Date(req.body.date);
+      if (req.body.approvedMovement) update.approvedMovement = Boolean(req.body.approvedMovement);
+
+      console.log(req.body.approvedMovement);
 
       const movement = await prisma.movement.update({
         where: { id },
@@ -119,5 +138,61 @@ export const MovementController = {
     } catch (err) {
       next(err);
     }
+  },
+
+  async updateFarmacia(req, res, next) {
+    try {
+      const id = Number(req.params.id);
+
+      const movement = await prisma.movement.findFirstOrThrow({
+        where: { id },
+        include: {
+          doctor: true,
+          medication: true
+        }
+      });
+
+      const medicationId = movement.medicationId;
+
+      const medication = await prisma.medication.findFirstOrThrow({
+        where: { id: medicationId }
+      });
+      
+
+
+      let newQuantity = movement.quantity;
+
+      if (medication.quantity < movement.quantity) {
+        return res.status(400).json({ error: 'Quantidade insuficiente em estoque.' });
+      }
+
+      newQuantity -= Number(movement.quantity);
+
+      prisma.medication.update({
+        where: { id: Number(medicationId) },
+        data: { quantity: newQuantity }
+      })
+
+      let update = {};
+
+      update.approvedMovement = Boolean(true);
+      update.userId = Number(req.usuario.id);
+
+      const movementUpdate = await prisma.movement.update({
+        where: { id },
+        data: update,
+        include: {
+          user: true,
+          doctor: true,
+          medication: true
+        }
+      });
+      
+      res.status(200).json(movement);
+      
+    } catch (err) {
+      next(err);
+    }
+
   }
 };

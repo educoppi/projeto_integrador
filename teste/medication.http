@@ -1,7 +1,7 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImNwZiI6IjEyMzQ2Nzg5MDMiLCJuYW1lIjoiUEhBUk1BQ1kiLCJncm91cCI6WyJQSEFSTUFDWSJdLCJpYXQiOjE3NjAzNzc3ODYsImV4cCI6MTc3MDc0NTc4Nn0.-6t565kBRGDnpjlNPIlHHV-y-hJpLD_WnIi2VqkQjCg
 ### Criando um medicamento
 
-POST http://localhost:3000/medications HTTP/1.1
+POST https://projeto-integrador-lf6v.onrender.com/medications HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 // tudo que vem abaixo da rota é chamado de "header"
@@ -16,66 +16,81 @@ Authorization: Bearer {{token}}
 
 ### Ler um medicamento
 
-GET http://localhost:3000/medications HTTP/1.1
+GET https://projeto-integrador-lf6v.onrender.com/medications HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 //GET não envia nada para o banco de dados, portanto não possui body
 // a ? depois do get é uma query, que precisa de uma chave e um valor que deseja ser buscado. ex: users?name=rafael&cpf=12345678910
 
 ### Filtrar um medicamento por nome
 
-GET http://localhost:3000/medications?name=Paracetamol HTTP/1.1
+GET https://projeto-integrador-lf6v.onrender.com/medications?name=paracetamol HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Filtrar um medicamento por tipo
 
-GET http://localhost:3000/medications?type=comprimido HTTP/1.1
+GET https://projeto-integrador-lf6v.onrender.com/medications?type=comprimido HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
-### Filtrar um medicamento por quantidade
+# ### Filtrar um medicamento por quantidade
 
-GET http://localhost:3000/medications?quantity=500 HTTP/1.1
-Content-Type: application/json
+# GET https://projeto-integrador-lf6v.onrender.com/medications?quantity=500 HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
 
 
-### Filtrar um medicamento por quantidade MAIOR QUE
+# ### Filtrar um medicamento por quantidade MAIOR QUE
 
-GET http://localhost:3000/medications?max=500 HTTP/1.1
-Content-Type: application/json
+# GET https://projeto-integrador-lf6v.onrender.com/medications?max=500 HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
 
-### Filtrar um medicamento por quantidade MAIOR OU IGUAL QUE
+# ### Filtrar um medicamento por quantidade MAIOR OU IGUAL QUE
 
-GET http://localhost:3000/medications?maxig=500 HTTP/1.1
-Content-Type: application/json
+# GET https://projeto-integrador-lf6v.onrender.com/medications?maxig=500 HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
 
-### Filtrar um medicamento por quantidade MENOR QUE
+# ### Filtrar um medicamento por quantidade MENOR QUE
 
-GET http://localhost:3000/medications?min=1000 HTTP/1.1
-Content-Type: application/json
+# GET https://projeto-integrador-lf6v.onrender.com/medications?min=1000 HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
 
-### Filtrar um medicamento por quantidade MENOR OU IGUAL QUE
+# ### Filtrar um medicamento por quantidade MENOR OU IGUAL QUE
 
-GET http://localhost:3000/medications?minig=1000 HTTP/1.1
-Content-Type: application/json
+# GET https://projeto-integrador-lf6v.onrender.com/medications?minig=1000 HTTP/1.1
+# Content-Type: application/json
+# Authorization: Bearer {{token}}
 
 ### Ler um medicamento pelo id (depois da ultima barra temos um "params" ( chamado no controller por req.params))
 
-GET http://localhost:3000/medications/1 HTTP/1.1
+GET https://projeto-integrador-lf6v.onrender.com/medications/1 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###Ler um medicamento pela dosagem
+GET https://projeto-integrador-lf6v.onrender.com/medications?dosage=500mg HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 ### Delete um medicamento pelo id
 
-DELETE http://localhost:3000/medications/2 HTTP/1.1
+DELETE https://projeto-integrador-lf6v.onrender.com/medications/9 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {token}
+Authorization: Bearer {{token}}
 
 
-### Atualizar um medicamento pelo id
-PUT http://localhost:3000/medications/1 HTTP/1.1
+### Atualizar um medicamento pelo nome
+PUT https://projeto-integrador-lf6v.onrender.com/medications/9 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {token}
+Authorization: Bearer {{token}}
 
 {
-     "name" : "Paracetamol",
+     "name" : "paracetamol",
      "quantity" : 300
 }

@@ -1,10 +1,13 @@
 import prisma from '../prisma.js';
 
 export const RecordController = {
-  // C - CREATE (INSERT)
-  async store(req, res, next) {
-    try {
-      const { patientId, appointmentDate, anotacao } = req.body;
+    //req-requisição res-resposta next-próximo
+    //c - CREATE,INSERT,POST,SET,STORE
+    async store(req, res, next) {
+        try {
+            const { patientId, appointmentDate, level, symptom, recentMedicine, annotationTriage} = req.body;
+            
+            console.log("#####################",req.body)
 
       // 🔍 validações básicas antes de criar o registro
       if (!anotacao || anotacao.trim().length < 10) {
@@ -13,45 +16,55 @@ export const RecordController = {
           .json({ error: "A anotação deve ter pelo menos 10 caracteres" });
       }
 
-      const p = await prisma.user.findFirst({
-        where: { id: Number(patientId) },
-      });
+            if(!p){
+                res.status(404).json({ error: "Paciente não encontrado" }) // alterado de 301 para 404
+                return
+            }
 
-      if (!p) {
-        return res.status(404).json({ error: "Paciente não encontrado" });
-      }
+            let u = await prisma.user.findFirst({
+                where: { id: req.usuario.id }
+            });
+            
+            if(!u){
+                res.status(404).json({ error: "Usuário não encontrado" }) // alterado de 301 para 404
+                return
+            }
 
-      if (p.role !== "PATIENT") {
-        return res.status(401).json({ error: "Usuário informado não é um paciente" });
-      }
+            const r = await prisma.record.create({
+                data: {
+                    patientId: Number(patientId),
+                    appointmentDate: new Date(appointmentDate),
+                    userId: req.usuario.id,
+                    level: Number(level),
+                    symptom: symptom,
+                    recentMedicine: recentMedicine,
+                    annotationTriage: annotationTriage
+                }
+            });
 
-      const u = await prisma.user.findFirst({
-        where: { id: req.usuario?.id },
-      });
+            
+            if(r){
+                await prisma.user.update({
+                    where: { id: Number(patientId) },
+                    data: { situation: "AGUARDANDO ATENDIMENTO" }
+                })
+            }
+            
+            res.status(201).json(r);
 
-      if (!u) {
-        return res.status(404).json({ error: "Usuário não encontrado" });
-      }
+        } catch (err) {
+            next(err);
+        }
+    },
 
-      if (u.role === "PATIENT") {
-        return res.status(401).json({ error: "Usuário não pode ser um paciente" });
-      }
-
-      // 🩺 criação do registro (record)
-      const r = await prisma.record.create({
-        data: {
-          patientId: Number(patientId),
-          appointmentDate: new Date(appointmentDate),
-          annotation: anotacao.trim(),
-          userId: req.usuario?.id || 1, // fallback
-        },
-      });
-
-      res.status(201).json(r);
-    } catch (err) {
-      next(err);
-    }
-  },
+    //R - READ,SELECT,GET,FINDMANY
+    async index(req, res, next) {
+        let query = {}
+        if (req.query.patientId) query = { patientId: Number(req.query.patientId) }
+        if (req.query.appointmentDate) query = { appointmentDate: new Date(req.query.appointmentDate) }
+        const records = await prisma.record.findMany()
+        res.status(200).json(records)
+    },
 
   // R - READ (LISTA DE REGISTROS)
   async index(req, res, next) {

@@ -3,10 +3,11 @@ import {MovementController} from '../controllers/movement.js'
 
 const route = Router();
 
-route.post('/', MovementController.store);
+route.post('/', MovementController.storeDoctor);
 route.get('/', MovementController.index);
 route.get('/:id', MovementController.show);
-route.delete('/:id',  MovementController.delete);
+route.delete('/:id', MovementController.delete);
 route.put('/:id', MovementController.update);
+route.put('/updateFarmacia/:id', MovementController.updateFarmacia)
 
 export default route;

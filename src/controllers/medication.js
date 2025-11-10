@@ -8,52 +8,75 @@ export const MedicationController = {
     //assíncrono nome_da_função(recebendo, responder, próxima coisa a ser executada)
     async store(req, res, next) {
         try {
-            const { name, quantity, dosage, type, expiresAt } = req.body; //dentro das variáveis vão os itens da tabela, caso tenha camel case, precisa estar exatamente igual
+            const { name, quantity, dosage, type, expiresAt } = req.body;
 
+            if (!name || !quantity || !dosage || !type || !expiresAt) {
+                return res.status(400).json({ message: 'Por favor, preencha todos os campos.' });
+            }
 
-
-            //nome da const é primeira letra do modelo 
-            const m = await prisma.medication.create({
-                data: {
-                    name,
+            // primeira validação para impedir cadastro se o medicamento já existir
+            const medicamentoExistente = await prisma.medication.findFirst({
+                where: {
+                    name: name.toLowerCase(),
                     dosage,
-                    quantity: Number(quantity),
-                    type,
-                    expiresAt
                 }
             });
 
-            //respondendo 201 (criado) e encapsulando no formato JSON a variável m
-            res.status(201).json(m); //201 é o código para a função de criação
+            if (medicamentoExistente) {
+                return res.status(409).json({ message: 'Medicamento com esse nome e dosagem já está cadastrado.' });
+            }
+
+            const m = await prisma.medication.create({
+                data: {
+                    name: name.toLowerCase(),
+                    dosage,
+                    quantity: Number(quantity),
+                    type,
+                    expiresAt,
+                }
+            });
+
+            res.status(201).json(m);
         } catch (err) {
             next(err);
         }
-
     },
 
     async index(req, res, _next) {
-
         let query = {}
-
-        if (req.query.name) query.name = req.query.name
-
-        if (req.query.type) query.type = req.query.type
-
+    
+        if (req.query.name) {
+          query.name = {
+            contains: req.query.name,
+            mode: 'insensitive'
+          }
+        }
+    
+        if (req.query.type) {
+          query.type = req.query.type
+        }
+    
+        if (req.query.dosage) {
+          query.dosage = {
+            contains: req.query.dosage,
+            mode: 'insensitive'
+          }
+        }
+    
         if (req.query.quantity) query.quantity = Number(req.query.quantity)
-
+    
         if (req.query.min) query.quantity = { lt: Number(req.query.min) }
         if (req.query.minig) query.quantity = { lte: Number(req.query.minig) }
         if (req.query.max) query.quantity = { gt: Number(req.query.max) }
         if (req.query.maxig) query.quantity = { gte: Number(req.query.maxig) }
-
-
+    
         if (req.query.expiresAt) query.expiresAt = req.query.expiresAt
-
+    
         const medications = await prisma.medication.findMany({
             where: query
         })
-
-        res.status(200).json(medications) //200 é o código de sucesso de retorno no prisma
+    
+        res.status(200).json(medications)
     },
     async show(req, res, _next) {
         try {
@@ -97,6 +120,24 @@ export const MedicationController = {
             if (req.body.quantity) update.quantity = Number(req.body.quantity)
             if (req.body.expiresAt) update.expiresAt = req.body.expiresAt
 
+            const currentMedication = await prisma.medication.findUniqueOrThrow({
+              where: { id }
+            })
+
+            if (currentMedication.quantity !== update.quantity) {
+              const movement = {
+                medicationId: id,
+                userId: req.usuario.id,
+                date: new Date(),
+                quantity: Math.abs(update.quantity - currentMedication.quantity),
+                movementType: (update.quantity > currentMedication.quantity) ? 'INBOUND' : 'OUTBOUND',
+                approvedMovement: true
+              }
+
+              await prisma.movement.create({
+                data: movement
+              });
+            }
 
             const medication = await prisma.medication.update({
                 where: { id },
@@ -108,6 +149,44 @@ export const MedicationController = {
         } catch (err) {
             next(err);
         }
+    },
+    async alertasMedicamentos(req, res, next) {
+      try {
+        const limit = Number(req.query.limit) || 400;
+        const hoje = new Date();
+        const trintaDiasDepois = new Date();
+        trintaDiasDepois.setDate(hoje.getDate() + 30);
+    
+        const estoqueBaixo = await prisma.medication.findMany({
+          where: {
+            quantity: {
+              lt: limit
+            }
+          },
+          orderBy: {
+            quantity: 'asc'
+          }
+        });
+    
+        const vencendo = await prisma.medication.findMany({
+          where: {
+            expiresAt: {
+              lte: trintaDiasDepois
+            }
+          },
+          orderBy: {
+            expiresAt: 'asc'
+          }
+        });
+    
+        res.status(200).json({
+          estoqueBaixo,
+          vencendo
+        });
+      } catch (err) {
+        next(err);
+      }
     }
+    
 
 }

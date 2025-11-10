@@ -13,4 +13,5 @@ route.get('/', UserController.index);
 route.get('/:id', verificaToken, UserController.show); // ":id" é o nome do parametro (req.params.id). ".show" é o novo metodo criado no controller
 route.delete('/:id', verificaToken, UserController.delete);
 route.put('/:id', verificaToken, UserController.update);
+route.get('/patient/awaitingAttendance', verificaToken, UserController.getPatientWithRecord); //PROCURA OS PACIENTES QUE ESTAO AGUARDANDO ATENDIMENTO, VEM A FICHA E O RECORD JUNTO
 export default route;
