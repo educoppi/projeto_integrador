@@ -58,5 +58,4 @@ Content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-     "approvedMovement": true
 }
