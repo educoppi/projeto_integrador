@@ -54,7 +54,7 @@ export const MovementController = {
       if (req.query.date) query.date = new Date(req.query.date);
       if (req.query.quantity) query.quantity = Number(req.query.quantity);
       if (req.query.movementType) query.movementType = req.query.movementType;
-      if (req.query.approvedMovement) query.approvedMovement = req.query.approvedMovement;
+      if (req.query.approvedMovement) query.approvedMovement = Boolean(req.query.approvedMovement);
 
       const movements = await prisma.movement.findMany({
         where: query,
