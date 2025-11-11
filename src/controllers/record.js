@@ -116,6 +116,9 @@ export const RecordController = {
                 dataToUpdate.appointmentDate = new Date(req.body.appointmentDate);
             if (req.body.annotationTriage)
                 dataToUpdate.annotationTriage = req.body.annotationTriage.trim();
+            if (req.body.annotationMedic)
+                dataToUpdate.annotationMedic = req.body.annotationMedic.trim();
+
 
             const updated = await prisma.record.update({
                 where: { id },
@@ -127,4 +130,39 @@ export const RecordController = {
             res.status(404).json({ error: "Erro: registro não atualizado" });
         }
     },
+    async finalizar(req, res, next) {
+
+
+
+        const id = Number(req.params.id);
+        const dataToUpdate = {};
+
+        if (req.body.annotationMedic)
+            dataToUpdate.annotationMedic = req.body.annotationMedic.trim();
+
+
+        const updated = await prisma.record.update({
+            where: { id },
+            data: dataToUpdate,
+        });
+
+        const exam = await prisma.exam.create({
+            data: {
+                recordId: id,
+                date: new Date(),
+                observation: req.body.observationExam
+            }
+        });
+
+        const prescription = await prisma.prescription.create({
+            data: {
+                recordId: id,
+                date: new Date(),
+                text: req.body.text,
+                observation: req.body.observationPrescription
+            }
+        });
+
+        res.status(200).json(updated);
+    }
 };

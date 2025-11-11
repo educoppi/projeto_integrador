@@ -88,8 +88,6 @@ model Exam {
   id          Int      @id @default(autoincrement())
   recordId    Int      @unique @map("record_id")
   date        DateTime
-  type        String
-  result      String
   observation String
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")

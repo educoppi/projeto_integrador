@@ -9,6 +9,7 @@ route.get('/:id',verificaToken, RecordController.show);//<> para buscar um item 
 route.get('/',verificaToken, RecordController.index);
 route.delete('/:id', verificaToken, RecordController.del);
 route.put('/:id', verificaToken, RecordController.update);
+route.put('/finalizar/:id', verificaToken, RecordController.finalizar);
 
 export default route;
 
