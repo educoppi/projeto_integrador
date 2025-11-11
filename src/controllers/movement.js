@@ -196,7 +196,7 @@ export const MovementController = {
         }
       });
       
-      res.status(200).json(movement);
+      res.status(200).json(movementUpdate);
       
     } catch (err) {
       next(err);
