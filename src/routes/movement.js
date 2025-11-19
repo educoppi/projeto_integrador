@@ -7,7 +7,7 @@ route.post('/', MovementController.storeDoctor);
 route.get('/', MovementController.index);
 route.get('/:id', MovementController.show);
 route.delete('/:id', MovementController.delete);
-route.put('/:id', MovementController.update);
 route.put('/updateFarmacia/:id', MovementController.updateFarmacia)
+route.put('/:id', MovementController.update);
 
 export default route;

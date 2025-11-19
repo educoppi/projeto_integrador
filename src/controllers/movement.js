@@ -54,7 +54,15 @@ export const MovementController = {
       if (req.query.date) query.date = new Date(req.query.date);
       if (req.query.quantity) query.quantity = Number(req.query.quantity);
       if (req.query.movementType) query.movementType = req.query.movementType;
-      if (req.query.approvedMovement) query.approvedMovement = req.query.approvedMovement;
+
+
+      const approved = false;
+
+      if (req.query.approvedMovement == 'true'){
+        approved = true
+      }
+
+      if (req.query.approvedMovement) query.approvedMovement = approved;
 
       const movements = await prisma.movement.findMany({
         where: query,
@@ -143,56 +151,60 @@ export const MovementController = {
   async updateFarmacia(req, res, next) {
     try {
       const id = Number(req.params.id);
+  
+      const result = await prisma.$transaction(async (prisma) => {
 
-      const movement = await prisma.movement.findFirstOrThrow({
-        where: { id },
-        include: {
-          doctor: true,
-          medication: true
+        const movement = await prisma.movement.findFirstOrThrow({
+          where: { id },
+          include: {
+            doctor: true,
+            medication: true
+          }
+        });
+  
+        const medicationId = movement.medicationId;
+  
+
+        const medication = await prisma.medication.findFirstOrThrow({
+          where: { id: medicationId }
+        });
+  
+
+        if (medication.quantity < movement.quantity) {
+          throw new Error('Quantidade insuficiente em estoque.');
         }
+  
+
+        const newQuantity = medication.quantity - movement.quantity;
+        await prisma.medication.update({
+          where: { id: medicationId },
+          data: { quantity: newQuantity }
+        });
+
+        const movementUpdate = await prisma.movement.update({
+          where: { id },
+          data: {
+            approvedMovement: true,
+            userId: Number(req.usuario.id)
+          },
+          include: {
+            user: true,
+            doctor: true,
+            medication: true
+          }
+        });
+  
+        return movementUpdate;
       });
-
-      const medicationId = movement.medicationId;
-
-      const medication = await prisma.medication.findFirstOrThrow({
-        where: { id: medicationId }
-      });
-      
-
-
-      let newQuantity = movement.quantity;
-
-      if (medication.quantity < movement.quantity) {
-        return res.status(400).json({ error: 'Quantidade insuficiente em estoque.' });
-      }
-
-      newQuantity -= Number(movement.quantity);
-
-      prisma.medication.update({
-        where: { id: Number(medicationId) },
-        data: { quantity: newQuantity }
-      })
-
-      let update = {};
-
-      update.approvedMovement = Boolean(true);
-      update.userId = Number(req.usuario.id);
-
-      const movementUpdate = await prisma.movement.update({
-        where: { id },
-        data: update,
-        include: {
-          user: true,
-          doctor: true,
-          medication: true
-        }
-      });
-      
-      res.status(200).json(movement);
-      
+  
+      res.status(200).json(result);
+  
     } catch (err) {
+      if (err.message === 'Quantidade insuficiente em estoque.') {
+        return res.status(400).json({ error: err.message });
+      }
       next(err);
     }
-
   }
+  
 };
