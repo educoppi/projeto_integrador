@@ -191,6 +191,8 @@ export const UserController = {
             if (req.body.phone) dataUpdate.phone = req.body.phone
             if (req.body.email) dataUpdate.email = req.body.email
             if (req.body.allergy) dataUpdate.allergy = req.body.allergy
+            if (req.body.birthDate) dataUpdate.birthDate = req.body.birthDate
+            if (req.body.situation) dataUpdate.situation = req.body.situation
     
             const u = await prisma.user.update({
                 where: {
