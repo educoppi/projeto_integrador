@@ -147,7 +147,7 @@ export const UserController = {
         if (req.query.cpf) query = {cpf: req.query.cpf}
         query = {situation: "EMPLOYEE"}
 
-        const users = await prisma.user.findMany({
+        const users = await prisma.user.findFirstOrThrow({
             where: query,
             include: {
                 group: {
