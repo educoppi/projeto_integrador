@@ -10,6 +10,7 @@ route.post('/patient', verificaToken, UserController.storePatient);
 route.post('/login', UserController.login);
 route.get('/logado', verificaToken, UserController.logado);
 route.get('/', UserController.index);
+route.get('/funcionario', UserController.indexFuncionario);
 route.get('/:id', verificaToken, UserController.show); // ":id" é o nome do parametro (req.params.id). ".show" é o novo metodo criado no controller
 route.delete('/:id', verificaToken, UserController.delete);
 route.put('/:id', verificaToken, UserController.update);

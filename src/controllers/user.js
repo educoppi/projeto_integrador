@@ -140,6 +140,26 @@ export const UserController = {
 
         res.status(200).json(users)
     },
+        async indexFuncionario(req, res, next){
+
+        let query = {}
+        
+        if (req.query.cpf) query = {cpf: req.query.cpf}
+        query = {situation: "EMPLOYEE"}
+
+        const users = await prisma.user.findMany({
+            where: query,
+            include: {
+                group: {
+                  include: {
+                    group: true
+                  }
+                }
+            }
+        })
+
+        res.status(200).json(users)
+    },
     async show(req, res, _next){
         try{
         const id = Number(req.params.id);  //PRECISA DO NUMBER PQ O JSON TRANSFORMA TUDO EM STRING
