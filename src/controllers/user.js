@@ -26,7 +26,9 @@ export const UserController = {
                         cpf,
                         phone,
                         email,
-                        group: group,
+                        group: {
+                            connect: [{id: group}]
+                        },
                         birthDate,
                         situation: "EMPLOYEE"
                     }
