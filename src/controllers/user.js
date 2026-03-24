@@ -3,44 +3,58 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const UserController = {
-  async store(req, res, next) {
-    try {
-      const { name, lastName, password, cpf, phone, email, group, birthDate } =
-        req.body;
+async store(req, res, next) {
+  try {
+    const { name, lastName, password, cpf, phone, email, group, birthDate } = req.body;
 
-      // if(!validaCPF(cpf)) {
-      //         res.status(401).json('erro': 'CPF inválido')
-      // }
+    // Validação opcional do CPF
+    // if(!validaCPF(cpf)) {
+    //   return res.status(401).json({ erro: 'CPF inválido' });
+    // }
 
-      const hash = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 10);
 
-      console.log(birthDate);
+    // 1. Cria o usuário
+    const user = await prisma.user.create({
+      data: {
+        name,
+        lastName,
+        password: hash,
+        cpf,
+        phone,
+        email,
+        birthDate,
+        situation: "EMPLOYEE",
+      },
+    });
 
-      const u = await prisma.user.create({
+    // 2. Cria a associação com o grupo (se o grupo foi informado)
+    if (group) {
+      await prisma.groupUser.create({
         data: {
-          name,
-          lastName,
-          password: hash,
-          cpf,
-          phone,
-          email,
-          group: {
-            create: {
-              group: {
-                connect: { id: group },
-              },
-            },
-          },
-          birthDate,
-          situation: "EMPLOYEE",
+          userId: user.id,
+          groupId: group, // 'group' deve ser o ID da tabela Group
         },
       });
-
-      res.status(201).json(u);
-    } catch (err) {
-      next(err);
     }
-  },
+
+    // 3. Recupera o usuário com os grupos associados (opcional, mas útil para o retorno)
+    const userWithGroup = await prisma.user.findUnique({
+      where: { id: user.id },
+      include: {
+        group: {
+          include: {
+            group: true, // traz os dados do Group
+          },
+        },
+      },
+    });
+
+    res.status(201).json(userWithGroup);
+  } catch (err) {
+    next(err);
+  }
+},
   async storePatient(req, res, next) {
     try {
       const {
