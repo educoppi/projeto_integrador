@@ -6,14 +6,15 @@
   "main": "src/api.js",
   "scripts": {
     "dev": "nodemon src/api.js",
-    "seed":"node prisma/seed.js",
+    "seed": "node prisma/seed.js",
     "start": "node src/api.js",
     "migrate": "prisma migrate dev",
     "reset": "prisma migrate reset --force",
     "push": "prisma db push",
     "generate": "prisma generate",
     "studio": "prisma studio",
-    "test": "echo \"No tests\""
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "@prisma/client": "^6.14.0",
@@ -27,7 +28,9 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "jest": "^30.3.0",
     "nodemon": "^3.1.10",
-    "prisma": "^6.14.0"
+    "prisma": "^6.14.0",
+    "supertest": "^7.2.2"
   }
 }
