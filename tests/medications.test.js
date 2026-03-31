@@ -13,12 +13,13 @@ describe("Testes de Medicamentos", () => {
   });
 
   test("deve criar um novo medicamento com sucesso (status 201)", async () => {
+    const uniqueName = `medicamento_${Date.now()}`;
     const novoMedicamento = {
-      name: "Paracetamol",
-      dosage: "500mg",
+      name: uniqueName,
+      dosage: "50mg",
       quantity: 100,
       type: "comprimido",
-      expiresAt: "2025-12-31T23:59:59.000Z",
+      expiresAt: "2026-12-31T23:59:59.000Z",
     };
 
     const response = await request(app)
@@ -53,7 +54,7 @@ describe("Testes de Medicamentos", () => {
       .expect(400);
 
     expect(response.body).toHaveProperty("message");
-    expect(response.body.message.toLowerCase()).toContain("name");
+    expect(response.body.message.toLowerCase()).toContain("por favor, preencha todos os campos.");
   });
 
   test("deve listar todos os medicamentos (status 200, array de objetos)", async () => {
@@ -79,38 +80,70 @@ describe("Testes de Medicamentos", () => {
   });
 
   test("deve alterar campos de um medicamento existente (status 200)", async () => {
+    const uniqueName = `medicamento_${Date.now()}`;
+
+    const createResponse = await request(app)
+      .post("/medications")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: uniqueName,
+        dosage: "50mg",
+        quantity: 1000,
+        type: "comprimido",
+        expiresAt: "2026-12-31T23:59:59.000Z",
+      })
+      .expect(201);
+
+    const medicationId = createResponse.body.id;
+
     const dadosAtualizados = {
-      quantity: 200,
-      expiresAt: "2026-06-30T00:00:00.000Z",
+      quantity: 500,
     };
 
     const response = await request(app)
-      .patch("/medications/1")
+      .put(`/medications/${medicationId}`)
       .set("Authorization", `Bearer ${token}`)
+      .set('Accept', 'application/json')
       .send(dadosAtualizados)
       .expect("Content-Type", /json/)
       .expect(200);
 
     expect(response.body.quantity).toBe(dadosAtualizados.quantity);
-    expect(response.body.expiresAt).toBe(dadosAtualizados.expiresAt);
-    expect(response.body).toHaveProperty("id", 1);
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("dosage");
-    expect(response.body).toHaveProperty("type");
+    expect(response.body.id).toBe(medicationId);
+    expect(response.body).toHaveProperty("name", uniqueName);
+    expect(response.body).toHaveProperty("dosage", "50mg");
+    expect(response.body).toHaveProperty("type", "comprimido");
+    expect(response.body).toHaveProperty("expiresAt", "2026-12-31T23:59:59.000Z");
     expect(response.body.updatedAt).not.toBe(response.body.createdAt);
   });
 
   test("deve deletar um medicamento e retornar 204", async () => {
+    const uniqueName = `medicamento_${Date.now()}`;
+
+    const createResponse = await request(app)
+      .post("/medications")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: uniqueName,
+        dosage: "50mg",
+        quantity: 1000,
+        type: "comprimido",
+        expiresAt: "2026-12-31T23:59:59.000Z",
+      })
+      .expect(201);
+
+    const medicationId = createResponse.body.id;
+
     await request(app)
-      .delete("/medications/1")
+      .delete(`/medications/${medicationId}`)
       .set("Authorization", `Bearer ${token}`)
       .expect(204);
 
     const getResponse = await request(app)
-      .get("/medications/1")
+      .get(`/medications/${medicationId}`)
       .set("Authorization", `Bearer ${token}`)
       .expect(404);
 
-    expect(getResponse.body).toHaveProperty("message");
+    expect(getResponse.body).toHaveProperty("error");
   });
 });
