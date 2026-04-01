@@ -13,7 +13,7 @@
     "push": "prisma db push",
     "generate": "prisma generate",
     "studio": "prisma studio",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },
   "dependencies": {
