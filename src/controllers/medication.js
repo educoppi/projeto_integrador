@@ -102,7 +102,7 @@ export const MedicationController = {
                 where: { id }
             }); //função para encontrar o primeiro medicamento com a id especificada, se não encontrar retorna um erro
 
-            res.status(200).json(medications);
+            res.status(204).send();
 
         } catch (err) {
             res.status(404).json({ error: "Medicamento não encontrado" });
