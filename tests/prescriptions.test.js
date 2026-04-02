@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { jest } from "@jest/globals";
 
-// 🔥 MOCK DO PRISMA (sempre antes do import do app)
+// MOCK DO PRISMA (sempre antes do import do app)
 const mockPrisma = {
   prescription: {
     findMany: jest.fn().mockResolvedValue([
@@ -37,11 +37,11 @@ jest.unstable_mockModule("../src/prisma.js", () => ({
   default: mockPrisma,
 }));
 
-// 🔥 IMPORTS DEPOIS DO MOCK
+// IMPORTS DEPOIS DO MOCK
 const request = (await import("supertest")).default;
 const app = (await import("../src/app.js")).default;
 
-// 🔑 GERAR TOKEN REAL
+// GERAR TOKEN REAL
 const token = jwt.sign(
   { id: 1 },
   process.env.JWT_SECRET || "PROJETO_INTEGRADOR",
