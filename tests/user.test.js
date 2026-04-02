@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { jest } from "@jest/globals";
 
-// 🔥 MOCK DO PRISMA
+//  MOCK DO PRISMA
 const mockPrisma = {
   user: {
     findMany: jest.fn().mockResolvedValue([
@@ -22,16 +22,16 @@ const mockPrisma = {
   $disconnect: jest.fn(),
 };
 
-// 🔥 MOCK (ESM CORRETO)
+//  MOCK (ESM CORRETO)
 jest.unstable_mockModule("../src/prisma.js", () => ({
   default: mockPrisma,
 }));
 
-// 🔥 IMPORTS (ESM)
+//  IMPORTS (ESM)
 const request = (await import("supertest")).default;
 const app = (await import("../src/app.js")).default;
 
-// 🔑 TOKEN
+//  TOKEN
 const token = jwt.sign(
   { id: 1 },
   process.env.JWT_SECRET || "PROJETO_INTEGRADOR",
@@ -40,7 +40,7 @@ const token = jwt.sign(
 
 describe("Testes de User", () => {
 
-  // ✅ CT-USER-01
+  //  CT-USER-01
   test("Filtrar usuários por nome (200)", async () => {
     const res = await request(app)
       .get("/users?name=Eduardo")
@@ -50,7 +50,7 @@ describe("Testes de User", () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  // ✅ CT-USER-02
+  //  CT-USER-02
   test("Buscar usuário inexistente (404)", async () => {
     const res = await request(app)
       .get("/users/999")
@@ -59,7 +59,7 @@ describe("Testes de User", () => {
     expect(res.status).toBe(404);
   });
 
-  // ✅ CT-USER-03
+  //  CT-USER-03
   test("Atualizar alergia (200)", async () => {
     const res = await request(app)
       .put("/users/1")
@@ -70,7 +70,7 @@ describe("Testes de User", () => {
     expect(res.body).toHaveProperty("allergy", "Frutos do Mar");
   });
 
-  // ✅ CT-USER-04 (CORRIGIDO → ID 1)
+  //  CT-USER-04 (CORRIGIDO → ID 1)
   test("Deletar usuário (200)", async () => {
     const res = await request(app)
       .delete("/users/1")
@@ -79,15 +79,13 @@ describe("Testes de User", () => {
     expect(res.status).toBe(200);
   });
 
-  // ⚠️ CT-USER-05 (AJUSTE DEPENDE DO BACKEND)
+  // CT-USER-05 (AJUSTE DEPENDE DO BACKEND)
   test("Acesso sem token", async () => {
     const res = await request(app)
       .get("/users");
 
-    // 👉 se sua API tem autenticação:
-    // expect(res.status).toBe(401);
 
-    // 👉 se NÃO tem:
+    
     expect(res.status).toBe(200);
   });
 
